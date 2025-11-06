@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Assistant - Baltimore Banner AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #1a1a1a; --accent: #2a9d8f; --green: #38ef7d; --purple: #7209b7; --orange: #f77f00; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; min-height: 100vh; }
+        .back-btn { position: fixed; top: 1rem; left: 1rem; background: white; color: #667eea; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 1000; }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+        .hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: white; padding: 4rem 2rem 3rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .hero .icon { font-size: 4rem; margin-bottom: 1rem; color: var(--accent); }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .impact-banner { background: linear-gradient(135deg, var(--accent), var(--green)); color: white; padding: 2rem; border-radius: 12px; text-align: center; margin: 2rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .impact-banner h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .demo-card { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s ease; }
+        .demo-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .demo-card h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .demo-card h3 i { color: var(--accent); }
+        input, select { width: 100%; padding: 0.75rem; border: 2px solid #dee2e6; border-radius: 6px; font-size: 1rem; font-family: inherit; margin-top: 0.5rem; }
+        input:focus, select:focus { outline: none; border-color: var(--accent); }
+        .btn { background: var(--accent); color: white; border: none; padding: 1rem 2rem; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; width: 100%; margin-top: 1rem; }
+        .btn:hover { background: #1d7a6d; transform: scale(1.02); }
+        .output { margin-top: 2rem; padding: 2rem; background: #f8f9fa; border-radius: 10px; border-left: 5px solid var(--accent); display: none; animation: slideIn 0.4s ease; }
+        .output.show { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .loading { text-align: center; padding: 2rem; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--accent); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .finding-card { background: white; padding: 1.5rem; margin: 1rem 0; border-radius: 8px; border-left: 4px solid var(--accent); transition: all 0.3s ease; }
+        .finding-card:hover { transform: translateX(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .finding-card h5 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .tag { display: inline-block; background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem; margin-right: 0.5rem; margin-top: 0.5rem; }
+        .tag.green { background: var(--green); }
+        .tag.orange { background: var(--orange); }
+        .tag.purple { background: var(--purple); }
+        .stat-box { background: linear-gradient(135deg, var(--accent), var(--green)); color: white; padding: 1.5rem; border-radius: 10px; text-align: center; margin: 1rem 0; }
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+        .progress-bar { background: #e9ecef; border-radius: 10px; height: 30px; margin: 1rem 0; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--accent), var(--green)); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; transition: width 2s ease; }
+    </style>
+</head>
+<body>
+    <a href="cover_page.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Overview</a>
+    <div class="hero">
+        <i class="fas fa-microscope icon"></i>
+        <h1>Research Assistant Experience</h1>
+        <p>Superhuman Document Analysis: Find What Humans Miss</p>
+    </div>
+    <div class="container">
+        <div class="impact-banner">
+            <h3>41 Hours → 45 Minutes | 100% Document Coverage | Pulitzer-Winning Investigations</h3>
+            <p>Process thousands of documents instantly and find hidden patterns</p>
+        </div>
+        <div class="demo-card">
+            <h3><i class="fas fa-file-upload"></i> Document Analysis Engine</h3>
+            <p>Upload thousands of documents - AI processes them in minutes:</p>
+            <select id="doc-set">
+                <option value="">Choose document set...</option>
+                <option value="police">2,500 Police Misconduct Reports (2015-2024)</option>
+                <option value="budget">1,800 City Budget Documents (10 years)</option>
+                <option value="contracts">3,200 Government Contracts & Bids</option>
+            </select>
+            <button class="btn" onclick="analyzeDocuments()">Analyze Documents</button>
+            <div id="doc-output" class="output"></div>
+        </div>
+        <div class="demo-card">
+            <h3><i class="fas fa-search-plus"></i> Pattern Detection</h3>
+            <p>AI finds patterns and connections humans would miss:</p>
+            <button class="btn" onclick="findPatterns()">Detect Patterns</button>
+            <div id="pattern-output" class="output"></div>
+        </div>
+        <div class="demo-card">
+            <h3><i class="fas fa-question-circle"></i> Natural Language Queries</h3>
+            <p>Ask questions in plain English - AI searches all documents:</p>
+            <input type="text" id="query-input" placeholder="e.g., 'Which officers have 5+ complaints but no disciplinary action?'">
+            <button class="btn" onclick="queryDocuments()">Search Documents</button>
+            <div id="query-output" class="output"></div>
+        </div>
+        <div class="demo-card">
+            <h3><i class="fas fa-chart-network"></i> Connection Mapper</h3>
+            <p>Visualize relationships between people, companies, and events:</p>
+            <button class="btn" onclick="mapConnections()">Map Connections</button>
+            <div id="connection-output" class="output"></div>
+        </div>
+    </div>
+    <script>
+        function analyzeDocuments() {
+            const docSet = document.getElementById('doc-set').value;
+            if (!docSet) { alert('Please select a document set'); return; }
+            const output = document.getElementById('doc-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Processing 2,500 documents...</p></div>';
+            output.classList.add('show');
+            setTimeout(() => {
+                output.innerHTML = '<h4><i class="fas fa-check-circle"></i> Analysis Complete</h4><div class="progress-bar"><div class="progress-fill" style="width: 100%;">2,500 / 2,500 Documents</div></div><div class="finding-card"><h5><i class="fas fa-exclamation-triangle" style="color: #e63946;"></i> Critical Finding #1</h5><p><strong>Pattern Detected:</strong> 47 officers with 5+ misconduct complaints received zero disciplinary action</p><p style="margin-top: 0.5rem; color: #666;">Documents: Reports #234, #567, #891... (47 total)<br>Confidence: 98% | Verified across multiple sources</p><span class="tag orange">High Priority</span><span class="tag">Verified</span></div><div class="finding-card"><h5><i class="fas fa-chart-line" style="color: #2a9d8f;"></i> Trend Analysis</h5><p><strong>Misconduct reports increased 340% in District 7 (2020-2024)</strong></p><p style="margin-top: 0.5rem; color: #666;">Spike correlates with leadership change in March 2020<br>Documents: 234 reports analyzed</p><span class="tag green">Story Lead</span></div><div class="finding-card"><h5><i class="fas fa-link" style="color: #7209b7;"></i> Hidden Connection</h5><p><strong>12 officers transferred between districts after complaints</strong></p><p style="margin-top: 0.5rem; color: #666;">Pattern suggests systematic reassignment vs discipline<br>Cross-referenced with HR records</p><span class="tag purple">Investigation Worthy</span></div><div class="stat-box"><h4>45 minutes</h4><p>vs 41 hours of manual review (98% time saved)</p></div>';
+            }, 3000);
+        }
+        function findPatterns() {
+            const output = document.getElementById('pattern-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing patterns across all documents...</p></div>';
+            output.classList.add('show');
+            setTimeout(() => {
+                output.innerHTML = '<h4><i class="fas fa-brain"></i> Pattern Detection Results</h4><div class="finding-card"><h5>Pattern #1: Geographic Clustering</h5><p>83% of complaints concentrated in 3 districts (out of 9)</p><p style="color: #666; margin-top: 0.5rem;">Districts 3, 7, and 9 account for majority of incidents<br>Correlation with understaffing: 0.89</p><span class="tag green">Statistically Significant</span></div><div class="finding-card"><h5>Pattern #2: Temporal Spike</h5><p>Complaints increase 67% during summer months (June-August)</p><p style="color: #666; margin-top: 0.5rem;">Consistent pattern across all 10 years analyzed<br>Possible factors: Heat, increased street activity</p><span class="tag">Seasonal Trend</span></div><div class="finding-card"><h5>Pattern #3: Complaint Resolution Time</h5><p>Average resolution: 287 days | But 23% take over 2 years</p><p style="color: #666; margin-top: 0.5rem;">Longest case: 1,456 days (4 years)<br>No clear pattern for delays - suggests systemic issue</p><span class="tag orange">Accountability Gap</span></div><div class="stat-box"><h4>100%</h4><p>Document coverage vs ~15% with manual review</p></div>';
+            }, 2500);
+        }
+        function queryDocuments() {
+            const output = document.getElementById('query-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Searching 2,500 documents...</p></div>';
+            output.classList.add('show');
+            setTimeout(() => {
+                output.innerHTML = '<h4><i class="fas fa-search"></i> Query Results</h4><p style="margin-bottom: 1rem;"><strong>Query:</strong> "Which officers have 5+ complaints but no disciplinary action?"</p><div class="finding-card"><h5>Officer #2847 - 8 Complaints, 0 Actions</h5><p><strong>Complaints:</strong> Excessive force (4), Misconduct (3), Harassment (1)<br><strong>Status:</strong> All cases closed with "insufficient evidence"<br><strong>Current:</strong> Active duty, District 7</p><span class="tag orange">High Priority</span></div><div class="finding-card"><h5>Officer #1923 - 7 Complaints, 0 Actions</h5><p><strong>Complaints:</strong> Excessive force (5), False arrest (2)<br><strong>Status:</strong> 6 cases closed, 1 still "under review" (3 years)<br><strong>Current:</strong> Active duty, District 3</p><span class="tag orange">High Priority</span></div><div class="finding-card"><h5>Officer #3156 - 6 Complaints, 0 Actions</h5><p><strong>Complaints:</strong> Misconduct (4), Excessive force (2)<br><strong>Status:</strong> All cases closed within 30 days (unusually fast)<br><strong>Note:</strong> Supervisor is brother-in-law (cross-ref HR records)</p><span class="tag purple">Conflict of Interest</span></div><p style="margin-top: 1rem; padding: 1rem; background: #fff3cd; border-radius: 8px;"><strong>Total Found:</strong> 47 officers matching criteria<br><strong>Documents Referenced:</strong> 312 reports<br><strong>Confidence:</strong> 99% (verified across multiple sources)</p><div class="stat-box"><h4>8 seconds</h4><p>vs hours of manual searching and cross-referencing</p></div>';
+            }, 2000);
+        }
+        function mapConnections() {
+            const output = document.getElementById('connection-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Mapping relationships across documents...</p></div>';
+            output.classList.add('show');
+            setTimeout(() => {
+                output.innerHTML = '<h4><i class="fas fa-project-diagram"></i> Connection Map Generated</h4><div style="background: #f8f9fa; padding: 2rem; border-radius: 8px; text-align: center; margin: 1rem 0;"><p style="font-size: 3rem; margin-bottom: 1rem;">🕸️</p><p style="color: #666; font-size: 1.1rem;"><strong>Network Visualization</strong><br>47 officers • 12 supervisors • 8 union reps • 234 complaints</p></div><div class="finding-card"><h5><i class="fas fa-users"></i> Key Connection #1</h5><p><strong>Supervisor Johnson oversees 8 of the 47 flagged officers</strong></p><p style="color: #666; margin-top: 0.5rem;">All 8 officers had complaints closed with "insufficient evidence"<br>Johnson signed off on all closures<br>Pattern suggests possible protection</p><span class="tag orange">Investigate Further</span></div><div class="finding-card"><h5><i class="fas fa-handshake"></i> Key Connection #2</h5><p><strong>Union Rep Martinez represented 23 of the 47 officers</strong></p><p style="color: #666; margin-top: 0.5rem;">Success rate: 100% (no disciplinary actions)<br>Average case duration: 412 days (vs 287 avg)<br>Strategy appears to be delay until evidence expires</p><span class="tag purple">Pattern Detected</span></div><div class="finding-card"><h5><i class="fas fa-building"></i> Key Connection #3</h5><p><strong>12 officers transferred to same district after complaints</strong></p><p style="color: #666; margin-top: 0.5rem;">District 9 appears to be "landing spot" for problematic officers<br>District Commander: Former union president<br>Suggests systematic reassignment vs accountability</p><span class="tag orange">Major Story</span></div><div class="stat-box"><h4>Pulitzer-Level</h4><p>Investigation quality - patterns humans would miss</p></div>';
+            }, 2800);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Experience - Baltimore Banner AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #7209b7;
+            --green: #2a9d8f;
+            --red: #e63946;
+            --orange: #f77f00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--accent), #9d4edd);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #9d4edd;
+            transform: scale(1.02);
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .article-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .article-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag.green { background: var(--green); }
+        .tag.orange { background: var(--orange); }
+        .tag.red { background: var(--red); }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), #9d4edd);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-grid .stat-box {
+            margin: 0;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #0c5460;
+        }
+
+        .info-box p {
+            color: #0c5460;
+            margin: 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--green);
+        }
+
+        .success-box p {
+            color: #155724;
+            margin: 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--orange);
+        }
+
+        .warning-box p {
+            color: #856404;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="cover_page.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Overview</a>
+
+    <div class="hero">
+        <i class="fas fa-chart-line icon"></i>
+        <h1>Editor Experience</h1>
+        <p>Data-Driven Leadership: Real-Time Analytics & Workflow Optimization</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>40% Admin Time Saved | 3x Strategic Work | 100% Visibility</h3>
+            <p>AI provides real-time insights, performance predictions, and workflow optimization</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-tachometer-alt"></i> AI Editorial Dashboard</h3>
+            <p>Your morning briefing with actionable insights and priority alerts:</p>
+            <button class="btn" onclick="showDashboard()">Load My Dashboard</button>
+            <div id="dashboard-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-crystal-ball"></i> Story Performance Predictor</h3>
+            <p>Before publication, AI predicts engagement and subscriber impact:</p>
+            <input type="text" id="story-headline" placeholder="Enter story headline...">
+            <button class="btn" onclick="predictPerformance()">Predict Performance</button>
+            <div id="predict-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-project-diagram"></i> Workflow Optimizer</h3>
+            <p>AI identifies bottlenecks and suggests resource allocation:</p>
+            <button class="btn" onclick="optimizeWorkflow()">Analyze Current Workflow</button>
+            <div id="workflow-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-bell"></i> Smart Alerts & Recommendations</h3>
+            <p>Proactive notifications about opportunities and risks:</p>
+            <button class="btn" onclick="showAlerts()">View Today's Alerts</button>
+            <div id="alerts-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-users"></i> Team Performance Analytics</h3>
+            <p>Track productivity, identify training needs, celebrate wins:</p>
+            <button class="btn" onclick="showTeamAnalytics()">View Team Dashboard</button>
+            <div id="team-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function showDashboard() {
+            const output = document.getElementById('dashboard-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading real-time newsroom analytics...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>☀️ Good Morning, Jennifer!</h4>
+                    <div class="info-box">
+                        <p><strong>Wednesday, January 15, 2025</strong> - AI-Powered Editorial Briefing</p>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>12</h4>
+                            <p>Stories in progress</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>3</h4>
+                            <p>Ready to publish</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>847</h4>
+                            <p>New subscribers (24h)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>94%</h4>
+                            <p>Team capacity</p>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>🚨 HIGH PRIORITY: Sarah's Investigation Ready</h5>
+                        <p><strong>Story:</strong> "Contract Awards Investigation"<br>
+                        <strong>AI Prediction:</strong> 450+ subscriptions expected<br>
+                        <strong>Action:</strong> Review by 2pm for Thursday morning publication<br>
+                        <strong>Impact:</strong> High subscriber value, potential awards consideration</p>
+                        <span class="tag green">High Subscriber Impact</span>
+                        <span class="tag">Ready to Review</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⚠️ WORKFLOW ALERT: Reporter Overload</h5>
+                        <p><strong>Issue:</strong> Marcus has Ravens game + 3 other deadlines today<br>
+                        <strong>AI Suggestion:</strong> Reassign county story to Jennifer P.<br>
+                        <strong>Impact:</strong> Prevents rushed coverage on high-traffic event<br>
+                        <strong>Confidence:</strong> 92% - Jennifer has covered similar stories</p>
+                        <span class="tag orange">Needs Decision</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>📈 OPPORTUNITY: Education Series Performing 3x</h5>
+                        <p><strong>Performance:</strong> 47 subscriptions/article vs 15 average<br>
+                        <strong>Engagement:</strong> 6.2 min avg time on page<br>
+                        <strong>Recommendation:</strong> Expand series, assign 2 follow-ups this week<br>
+                        <strong>Potential:</strong> Could drive 200+ additional subscriptions</p>
+                        <span class="tag green">Growth Driver</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>2 hours → 10 min</h4>
+                        <p>Daily coordination time with AI dashboard</p>
+                    </div>
+                `;
+            }, 1800);
+        }
+
+        function predictPerformance() {
+            const headline = document.getElementById('story-headline').value;
+            if (!headline.trim()) {
+                alert('Please enter a headline');
+                return;
+            }
+
+            const output = document.getElementById('predict-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing historical performance data...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📊 Performance Prediction</h4>
+                    <div class="info-box">
+                        <p><strong>Story:</strong> ${headline}</p>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>8,400</h4>
+                            <p>Expected pageviews (24hrs)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>42</h4>
+                            <p>Predicted subscriptions</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>4.2min</h4>
+                            <p>Avg time on page</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>847</h4>
+                            <p>Expected social shares</p>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⏰ Optimal Publishing Strategy</h5>
+                        <p><strong>Best Day:</strong> Thursday<br>
+                        <strong>Best Time:</strong> 6:00 AM<br>
+                        <strong>Why:</strong> Local government stories perform 23% better Thu-Fri mornings<br>
+                        <strong>Audience:</strong> Peak engagement from commuters and morning readers</p>
+                        <span class="tag green">Timing Optimized</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>🎯 Audience Targeting</h5>
+                        <p><strong>Primary Audience:</strong> Policy-interested subscribers (2,400 readers)<br>
+                        <strong>Secondary:</strong> Local business community (1,800 readers)<br>
+                        <strong>Newsletter:</strong> Include in "Politics & Policy" digest<br>
+                        <strong>Push Alert:</strong> Recommended for high-engagement subscribers</p>
+                        <span class="tag">Targeted Distribution</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>💡 Optimization Suggestions</h5>
+                        <p>• Add data visualization - increases engagement 34%<br>
+                        • Include expert quote in first 3 paragraphs<br>
+                        • Link to 2-3 related stories for context<br>
+                        • Consider follow-up angle for next week</p>
+                        <span class="tag orange">Recommendations</span>
+                    </div>
+
+                    <div class="stat-box" style="background: linear-gradient(135deg, var(--green), #38ef7d);">
+                        <h4>87%</h4>
+                        <p>AI prediction confidence level</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function optimizeWorkflow() {
+            const output = document.getElementById('workflow-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing team capacity and deadlines...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🔄 Workflow Analysis</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>94%</h4>
+                            <p>Current capacity</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>3</h4>
+                            <p>Bottlenecks detected</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>18</h4>
+                            <p>Active assignments</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>5</h4>
+                            <p>Due today</p>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>🚨 CRITICAL: Editing Bottleneck</h5>
+                        <p><strong>Issue:</strong> 7 stories waiting for final edit, only 2 editors available<br>
+                        <strong>Impact:</strong> 3 stories may miss optimal publish window<br>
+                        <strong>AI Suggestion:</strong> Prioritize high-impact stories (Investigation, Education series)<br>
+                        <strong>Alternative:</strong> Delay lower-priority evergreen content to tomorrow</p>
+                        <span class="tag red">High Priority</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⚠️ RESOURCE IMBALANCE</h5>
+                        <p><strong>Issue:</strong> Sports team at 120% capacity, Features at 65%<br>
+                        <strong>Reason:</strong> Ravens playoff coverage + Orioles spring training<br>
+                        <strong>AI Suggestion:</strong> Temporarily reassign 1 features reporter to sports<br>
+                        <strong>Benefit:</strong> Better coverage quality, reduced burnout risk</p>
+                        <span class="tag orange">Needs Action</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>💡 EFFICIENCY OPPORTUNITY</h5>
+                        <p><strong>Finding:</strong> 3 reporters covering similar education angles<br>
+                        <strong>Suggestion:</strong> Coordinate into comprehensive package<br>
+                        <strong>Benefit:</strong> Stronger story, better resource use, higher subscriber value<br>
+                        <strong>Estimated Impact:</strong> +150 subscriptions vs separate stories</p>
+                        <span class="tag green">Optimization</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>40%</h4>
+                        <p>Time saved on workflow management with AI</p>
+                    </div>
+                `;
+            }, 1900);
+        }
+
+        function showAlerts() {
+            const output = document.getElementById('alerts-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading AI-generated alerts...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🔔 Today's Smart Alerts</h4>
+
+                    <div class="article-card">
+                        <h5>🎯 TRENDING TOPIC ALERT</h5>
+                        <p><strong>Topic:</strong> Baltimore school funding<br>
+                        <strong>Trend:</strong> 340% increase in searches (last 24 hours)<br>
+                        <strong>Trigger:</strong> State budget hearing announced<br>
+                        <strong>Opportunity:</strong> Publish education funding explainer today<br>
+                        <strong>Potential:</strong> High traffic window (next 48 hours)</p>
+                        <span class="tag green">High Opportunity</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⚠️ COMPETITOR ALERT</h5>
+                        <p><strong>Competitor:</strong> Baltimore Sun published similar housing story<br>
+                        <strong>Published:</strong> 2 hours ago<br>
+                        <strong>AI Analysis:</strong> Our story has stronger data, better sources<br>
+                        <strong>Recommendation:</strong> Publish today with "exclusive analysis" angle<br>
+                        <strong>Differentiation:</strong> Emphasize unique investigation findings</p>
+                        <span class="tag orange">Time Sensitive</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>📈 SUBSCRIBER MILESTONE</h5>
+                        <p><strong>Achievement:</strong> Crossed 50,000 total subscribers<br>
+                        <strong>Growth:</strong> +12% this quarter<br>
+                        <strong>Top Driver:</strong> Investigative series (23% of new subs)<br>
+                        <strong>Suggestion:</strong> Celebrate with team, share success story<br>
+                        <strong>Next Goal:</strong> 60,000 by end of Q2</p>
+                        <span class="tag green">Celebrate!</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>🎓 TRAINING OPPORTUNITY</h5>
+                        <p><strong>Finding:</strong> 3 reporters struggling with data visualization<br>
+                        <strong>Impact:</strong> Stories missing engagement-boosting elements<br>
+                        <strong>Suggestion:</strong> Schedule data journalism workshop<br>
+                        <strong>Potential Benefit:</strong> +25% engagement on data-heavy stories</p>
+                        <span class="tag">Development</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>15 alerts</h4>
+                        <p>Proactive insights delivered daily</p>
+                    </div>
+                `;
+            }, 1700);
+        }
+
+        function showTeamAnalytics() {
+            const output = document.getElementById('team-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Analyzing team performance data...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>👥 Team Performance Dashboard</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>127</h4>
+                            <p>Stories published (30 days)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>3,847</h4>
+                            <p>Subscriptions driven</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>4.8min</h4>
+                            <p>Avg time on page</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>89%</h4>
+                            <p>On-time delivery</p>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>🌟 TOP PERFORMER: Sarah Martinez</h5>
+                        <p><strong>Stories:</strong> 12 published (30 days)<br>
+                        <strong>Impact:</strong> 847 subscriptions driven (highest on team)<br>
+                        <strong>Specialty:</strong> Investigative reporting<br>
+                        <strong>Avg Engagement:</strong> 6.2 min per story (team avg: 4.8 min)<br>
+                        <strong>Recognition:</strong> Consider for investigative lead role</p>
+                        <span class="tag green">Exceptional</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>📈 RISING STAR: Michael Chen</h5>
+                        <p><strong>Growth:</strong> +45% engagement over last quarter<br>
+                        <strong>Strength:</strong> Business & tech coverage<br>
+                        <strong>Recent Win:</strong> Tech jobs story drove 156 subscriptions<br>
+                        <strong>Opportunity:</strong> Expand to enterprise reporting</p>
+                        <span class="tag green">Growing</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>💡 DEVELOPMENT NEED: Jennifer Park</h5>
+                        <p><strong>Issue:</strong> Strong writing, but stories averaging 2.8 min engagement<br>
+                        <strong>Analysis:</strong> Missing compelling ledes and data elements<br>
+                        <strong>Suggestion:</strong> Pair with Sarah for mentoring on narrative structure<br>
+                        <strong>Potential:</strong> Could increase engagement 40% with coaching</p>
+                        <span class="tag orange">Coaching Opportunity</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⚠️ BURNOUT RISK: Marcus Johnson</h5>
+                        <p><strong>Workload:</strong> 18 stories in 30 days (team avg: 11)<br>
+                        <strong>Quality:</strong> Still high, but declining engagement trend<br>
+                        <strong>Recommendation:</strong> Reduce assignment load 20% next month<br>
+                        <strong>Action:</strong> Schedule check-in conversation</p>
+                        <span class="tag red">Needs Attention</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>3x</h4>
+                        <p>More time for strategic coaching vs admin tasks</p>
+                    </div>
+                `;
+            }, 2100);
+        }
+    </script>
+</body>
+</html>

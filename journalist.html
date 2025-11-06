@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journalist Experience - Baltimore Banner AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #e63946;
+            --green: #2a9d8f;
+            --purple: #7209b7;
+            --orange: #f77f00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--accent), #d62839);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #d62839;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            margin-left: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            margin-top: 0;
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .article-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .article-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag.green { background: var(--green); }
+        .tag.orange { background: var(--orange); }
+        .tag.purple { background: var(--purple); }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), #d62839);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .success-box {
+            background: #d4edda;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--green);
+        }
+
+        .success-box p {
+            color: #155724;
+            margin: 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--orange);
+        }
+
+        .warning-box p {
+            color: #856404;
+            margin: 0;
+        }
+
+        .story-example {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #457b9d;
+        }
+
+        .story-example p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="cover_page.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Overview</a>
+
+    <div class="hero">
+        <i class="fas fa-pen-fancy icon"></i>
+        <h1>Journalist Experience</h1>
+        <p>AI-Augmented Superpowers: Focus on Storytelling, Not Busywork</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>90% Research Time Saved | 3-4x More Stories | 20 Min Saved Per Story | Pulitzer-Level Work</h3>
+            <p>AI handles research, fact-checking, and document analysis</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-robot"></i> Live AI Writing Assistant</h3>
+            <p style="color: #e63946; margin-bottom: 1rem;">Start writing and watch AI assist you in real-time with research, sources, fact-checking, and suggestions:</p>
+            <textarea id="journalist-text" rows="6" placeholder="Type here or click 'Load Demo Story' to see AI assistance in action...
+
+Example: 'Baltimore County approves $50M school construction budget. 5 new schools planned over 3 years. Community divided on location choices. Some areas feel excluded.'"></textarea>
+            <div class="btn-group">
+                <button class="btn" onclick="activateAIAssistant()">Activate AI Assistant</button>
+                <button class="btn btn-secondary" onclick="loadDemoStory()">Load Demo Story</button>
+                <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+            </div>
+            <div id="assistant-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-lightbulb"></i> Story Angle Generator</h3>
+            <p style="color: #457b9d; margin-bottom: 0.5rem;">Input basic facts and AI suggests multiple story angles based on <strong>past performance</strong> and <strong>community impact</strong>:</p>
+            <p style="color: #666; font-size: 0.9rem; font-style: italic; margin-bottom: 1rem;">Example: Baltimore County approves $50M school construction budget. 5 new schools planned over 3 years. Community divided on location choices. Some areas feel excluded.</p>
+            <textarea id="angle-text" rows="4" placeholder="Enter basic facts about your story..."></textarea>
+            <button class="btn" onclick="generateAngles()">Generate Story Angles</button>
+            <div id="angle-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-check-circle"></i> Real-Time Fact Checker</h3>
+            <p>AI verifies claims as you write:</p>
+            <textarea id="fact-text" rows="3" placeholder="Example: 'Baltimore's unemployment rate dropped to 5.2% in December 2024, a 15% decrease from the previous year.'"></textarea>
+            <button class="btn" onclick="checkFacts()">Verify Claims</button>
+            <div id="fact-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-search"></i> Source Finder</h3>
+            <p>AI finds expert sources and contact information instantly:</p>
+            <input type="text" id="source-topic" placeholder="Topic: e.g., 'Baltimore housing policy expert'">
+            <button class="btn" onclick="findSources()">Find Sources</button>
+            <div id="source-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-history"></i> Related Coverage Finder</h3>
+            <p>Instantly find all related articles from your archives:</p>
+            <input type="text" id="coverage-topic" placeholder="Topic: e.g., 'Canton development'">
+            <button class="btn" onclick="findCoverage()">Find Related Stories</button>
+            <div id="coverage-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-language"></i> SEO & Headline Optimizer</h3>
+            <p>AI suggests headlines that perform better in search and social:</p>
+            <input type="text" id="headline-input" placeholder="Your headline: e.g., 'City Council Approves Housing Development'">
+            <button class="btn" onclick="optimizeHeadline()">Optimize Headline</button>
+            <div id="headline-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadDemoStory() {
+            const textarea = document.getElementById('journalist-text');
+            textarea.value = "Baltimore County approves $50M school construction budget. 5 new schools planned over 3 years. Community divided on location choices. Some areas feel excluded.";
+            textarea.focus();
+        }
+
+        function clearText() {
+            document.getElementById('journalist-text').value = '';
+            const output = document.getElementById('assistant-output');
+            output.classList.remove('show');
+        }
+
+        function activateAIAssistant() {
+            const text = document.getElementById('journalist-text').value;
+            if (!text.trim()) {
+                alert('Please enter some text or click "Load Demo Story"');
+                return;
+            }
+
+            const output = document.getElementById('assistant-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI researching background, checking claims, and finding sources...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>💡 AI Assistance Active</h4>
+
+                    <div class="article-card">
+                        <h5>📚 Related Coverage Found</h5>
+                        <p>• "School Funding Debate Intensifies" (November 2024)<br>
+                        • "Community Pushback on School Locations" (September 2024)<br>
+                        • "Baltimore County Education Budget Analysis" (June 2024)</p>
+                        <span class="tag">3 articles linked</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>✅ Fact Check: Budget Amount</h5>
+                        <p>"$50M school construction budget" - VERIFIED<br>
+                        Source: Baltimore County Board of Education meeting minutes (Jan 14, 2025)</p>
+                        <span class="tag green">Verified</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⚠️ Missing Context Detected</h5>
+                        <p>AI suggests adding:<br>
+                        • Previous school construction budget for comparison<br>
+                        • Timeline details for the 5 schools<br>
+                        • Specific neighborhoods affected by location decisions</p>
+                        <span class="tag orange">Needs Detail</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>👥 Recommended Sources</h5>
+                        <p>• Dr. Darryl Williams, Superintendent (quoted 23x on school construction)<br>
+                        • Makeda Scott, Board Member (education equity advocate)<br>
+                        • Parent advocacy groups in underserved areas<br>
+                        • Construction timeline experts</p>
+                        <span class="tag green">Sources ready</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>📊 Story Angle Suggestions</h5>
+                        <p>Based on past performance:<br>
+                        • <strong>Equity angle:</strong> "Which neighborhoods are left out?" (High engagement)<br>
+                        • <strong>Financial angle:</strong> "How $50M compares to neighboring counties"<br>
+                        • <strong>Timeline angle:</strong> "3-year plan: What gets built first and why?"</p>
+                        <span class="tag purple">High Impact</span>
+                    </div>
+
+                    <div class="stat-box" style="background: linear-gradient(135deg, var(--purple), #9d4edd);">
+                        <h4>20 minutes</h4>
+                        <p>Research time saved with AI assistant</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function generateAngles() {
+            const text = document.getElementById('angle-text').value;
+            if (!text.trim()) {
+                alert('Please enter basic facts about your story');
+                return;
+            }
+
+            const output = document.getElementById('angle-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing facts and generating story angles based on past performance and community impact...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📰 AI-Generated Story Angles</h4>
+                    <p style="color: #666; margin-bottom: 1rem;">Based on your input, here are multiple angles ranked by predicted engagement and community impact:</p>
+
+                    <div class="article-card">
+                        <h5>🔥 ANGLE #1: Equity & Access (Highest Impact)</h5>
+                        <p><strong>Headline:</strong> "Left Behind: How Baltimore County's $50M School Plan Excludes Struggling Neighborhoods"</p>
+                        <p style="color: #666; margin: 0.5rem 0;"><strong>Why this works:</strong> Equity stories drive 3.4x more engagement. Community impact angle resonates with subscribers.</p>
+                        <p style="color: #666;"><strong>Key questions to explore:</strong><br>
+                        • Which neighborhoods are excluded and why?<br>
+                        • What are the demographic differences?<br>
+                        • How do excluded communities feel?<br>
+                        • What's the historical context of school investment disparities?</p>
+                        <span class="tag green">450+ expected subscriptions</span>
+                        <span class="tag purple">High Community Impact</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>💰 ANGLE #2: Financial Accountability</h5>
+                        <p><strong>Headline:</strong> "$50M Question: How Baltimore County's School Budget Compares to Neighbors"</p>
+                        <p style="color: #666; margin: 0.5rem 0;"><strong>Why this works:</strong> Financial accountability stories perform well with business-minded readers.</p>
+                        <p style="color: #666;"><strong>Key questions to explore:</strong><br>
+                        • How does $50M compare to other counties?<br>
+                        • What's the cost per student?<br>
+                        • Are there efficiency concerns?<br>
+                        • What's the ROI on school construction?</p>
+                        <span class="tag orange">280+ expected subscriptions</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>⏱️ ANGLE #3: Timeline & Priorities</h5>
+                        <p><strong>Headline:</strong> "3-Year Plan: Which Baltimore County Schools Get Built First—And Why It Matters"</p>
+                        <p style="color: #666; margin: 0.5rem 0;"><strong>Why this works:</strong> Parents want to know when their school is affected.</p>
+                        <p style="color: #666;"><strong>Key questions to explore:</strong><br>
+                        • What's the construction timeline?<br>
+                        • Which schools are prioritized?<br>
+                        • What criteria determined the order?<br>
+                        • How will construction affect current students?</p>
+                        <span class="tag">220+ expected subscriptions</span>
+                    </div>
+
+                    <div class="article-card">
+                        <h5>🏘️ ANGLE #4: Community Voice</h5>
+                        <p><strong>Headline:</strong> "Divided Communities: Inside the Battle Over Baltimore County's New School Locations"</p>
+                        <p style="color: #666; margin: 0.5rem 0;"><strong>Why this works:</strong> Human interest angle with multiple perspectives.</p>
+                        <p style="color: #666;"><strong>Key questions to explore:</strong><br>
+                        • What are the competing interests?<br>
+                        • Who are the key community voices?<br>
+                        • What compromises were considered?<br>
+                        • How was community input gathered?</p>
+                        <span class="tag">190+ expected subscriptions</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>4 angles</h4>
+                        <p>Generated in 3 seconds vs hours of brainstorming</p>
+                    </div>
+                `;
+            }, 2200);
+        }
+
+        function checkFacts() {
+            const output = document.getElementById('fact-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Checking against Bureau of Labor Statistics...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>✅ Fact Check Results</h4>
+                    <div class="success-box">
+                        <p><strong>✅ VERIFIED:</strong> "5.2% unemployment rate in December 2024"</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Source: Bureau of Labor Statistics | Confidence: 98%</p>
+                    </div>
+                    <div class="warning-box">
+                        <p><strong>⚠️ NEEDS CORRECTION:</strong> "15% decrease"</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">December 2023 rate was 6.1%, making actual decrease 14.75%. Suggest using "nearly 15%" or "14.8%"</p>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, var(--green), #38ef7d);">
+                        <h4>2 seconds</h4>
+                        <p>vs 15-20 minutes manual research</p>
+                    </div>
+                `;
+            }, 1800);
+        }
+
+        function findSources() {
+            const topic = document.getElementById('source-topic').value;
+            if (!topic.trim()) {
+                alert('Please enter a topic');
+                return;
+            }
+
+            const output = document.getElementById('source-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI searching expert database and past coverage...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>👥 Expert Sources Found</h4>
+                    <div class="article-card">
+                        <h5>Dr. Carol Ott - Housing Policy Expert</h5>
+                        <p><strong>Affiliation:</strong> Johns Hopkins University, Urban Studies<br>
+                        <strong>Expertise:</strong> Affordable housing, zoning policy<br>
+                        <strong>Past quotes:</strong> Quoted 18x in Baltimore Banner articles<br>
+                        <strong>Contact:</strong> cott@jhu.edu | (410) 555-0123<br>
+                        <strong>Availability:</strong> Usually responds within 4 hours</p>
+                        <span class="tag green">Highly Responsive</span>
+                    </div>
+                    <div class="article-card">
+                        <h5>Vincent Quayle - Baltimore Housing Commissioner</h5>
+                        <p><strong>Role:</strong> Commissioner, Baltimore Housing Department<br>
+                        <strong>Expertise:</strong> City housing policy, development projects<br>
+                        <strong>Past quotes:</strong> Quoted 12x in past 6 months<br>
+                        <strong>Contact:</strong> Press office: (410) 555-0456<br>
+                        <strong>Note:</strong> Best reached through press secretary</p>
+                        <span class="tag">Official Source</span>
+                    </div>
+                    <div class="stat-box">
+                        <h4>8 sources</h4>
+                        <p>Found with contact info in 5 seconds</p>
+                    </div>
+                `;
+            }, 1600);
+        }
+
+        function findCoverage() {
+            const topic = document.getElementById('coverage-topic').value;
+            if (!topic.trim()) {
+                alert('Please enter a topic');
+                return;
+            }
+
+            const output = document.getElementById('coverage-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Searching 10,000+ archived articles...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📚 Related Coverage (12 articles found)</h4>
+                    <div class="article-card">
+                        <h5>"Canton Development Plans Face Community Resistance"</h5>
+                        <p style="color: #666;">By Sarah Martinez | June 15, 2024<br>
+                        Relevance: High-rise opposition, community meetings, zoning concerns</p>
+                        <span class="tag green">95% Relevant</span>
+                    </div>
+                    <div class="article-card">
+                        <h5>"Housing Crisis: Baltimore Needs 20,000 New Units"</h5>
+                        <p style="color: #666;">By Michael Chen | March 3, 2024<br>
+                        Relevance: Housing shortage context, development needs</p>
+                        <span class="tag">87% Relevant</span>
+                    </div>
+                    <div class="article-card">
+                        <h5>"Canton Waterfront: A History of Development Battles"</h5>
+                        <p style="color: #666;">By Jennifer Park | January 12, 2024<br>
+                        Relevance: Historical context, neighborhood character debates</p>
+                        <span class="tag">82% Relevant</span>
+                    </div>
+                    <div class="stat-box">
+                        <h4>3 seconds</h4>
+                        <p>vs 30+ minutes manual archive search</p>
+                    </div>
+                `;
+            }, 1700);
+        }
+
+        function optimizeHeadline() {
+            const headline = document.getElementById('headline-input').value;
+            if (!headline.trim()) {
+                alert('Please enter a headline');
+                return;
+            }
+
+            const output = document.getElementById('headline-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing SEO performance and social engagement patterns...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📈 Headline Optimization Results</h4>
+                    <div class="article-card">
+                        <h5>Your Original Headline:</h5>
+                        <p style="font-size: 1.1rem; color: #666;">"${headline}"</p>
+                        <p style="color: #666; margin-top: 0.5rem;">Predicted performance: 3,200 pageviews | 12 subscriptions</p>
+                        <span class="tag orange">Baseline</span>
+                    </div>
+                    <div class="article-card">
+                        <h5>🏆 AI-Optimized Headline #1 (Best for SEO):</h5>
+                        <p style="font-size: 1.1rem; color: var(--green); font-weight: 600;">"Baltimore City Council Approves Controversial Canton Housing Development 8-3"</p>
+                        <p style="color: #666; margin-top: 0.5rem;"><strong>Why it works:</strong> Includes location, action, controversy, vote count<br>
+                        <strong>SEO keywords:</strong> Baltimore, City Council, Canton, housing<br>
+                        Predicted performance: 5,800 pageviews (+81%) | 23 subscriptions (+92%)</p>
+                        <span class="tag green">+81% Traffic</span>
+                    </div>
+                    <div class="article-card">
+                        <h5>🔥 AI-Optimized Headline #2 (Best for Social):</h5>
+                        <p style="font-size: 1.1rem; color: var(--purple); font-weight: 600;">"Canton Residents Furious as City Council Approves High-Rise Development"</p>
+                        <p style="color: #666; margin-top: 0.5rem;"><strong>Why it works:</strong> Emotional hook, community angle, conflict<br>
+                        <strong>Social appeal:</strong> High shareability, strong reaction words<br>
+                        Predicted performance: 7,200 pageviews (+125%) | 28 subscriptions (+133%)</p>
+                        <span class="tag purple">+125% Traffic</span>
+                    </div>
+                    <div class="stat-box">
+                        <h4>2.3x</h4>
+                        <p>Average traffic increase with AI-optimized headlines</p>
+                    </div>
+                `;
+            }, 1900);
+        }
+    </script>
+</body>
+</html>

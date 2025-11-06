@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baltimore Banner AI Transformation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .persona-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .persona-card .icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .persona-card.subscriber .icon { color: #457b9d; }
+        .persona-card.journalist .icon { color: #e63946; }
+        .persona-card.researcher .icon { color: #2a9d8f; }
+        .persona-card.editor .icon { color: #7209b7; }
+
+        .persona-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+            color: #1a1a1a;
+        }
+
+        .persona-card p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .persona-card .impact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+        }
+
+        .cta {
+            background: white;
+            color: #667eea;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.2rem; }
+            .personas-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🚀 Baltimore Banner AI Transformation</h1>
+            <p>Experience the Future of Local Journalism</p>
+        </div>
+
+        <div class="personas-grid">
+            <a href="subscriber.html" class="persona-card subscriber">
+                <i class="fas fa-user icon"></i>
+                <h2>Subscriber</h2>
+                <p>Netflix-level personalization for every reader. Your own unique Baltimore Banner experience.</p>
+                <div class="impact">6x Engagement | 28% Churn Reduction</div>
+                <div class="cta">Explore Experience →</div>
+            </a>
+
+            <a href="journalist.html" class="persona-card journalist">
+                <i class="fas fa-pen-fancy icon"></i>
+                <h2>Journalist</h2>
+                <p>AI-powered research, fact-checking, and writing assistance. Focus on storytelling, not busywork.</p>
+                <div class="impact">90% Research Time Saved | 3-4x More Stories</div>
+                <div class="cta">Explore Experience →</div>
+            </a>
+
+            <a href="researcher.html" class="persona-card researcher">
+                <i class="fas fa-microscope icon"></i>
+                <h2>Research Assistant</h2>
+                <p>Process 2,500 documents in 45 minutes. Find patterns humans miss. Transform investigations.</p>
+                <div class="impact">41 Hours → 4 Hours | 100% Document Coverage</div>
+                <div class="cta">Explore Experience →</div>
+            </a>
+
+            <a href="editor.html" class="persona-card editor">
+                <i class="fas fa-chart-line icon"></i>
+                <h2>Editor</h2>
+                <p>Real-time analytics, workflow optimization, performance prediction. Lead with data, not guesswork.</p>
+                <div class="impact">40% Admin Time Saved | 3x Strategic Work</div>
+                <div class="cta">Explore Experience →</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

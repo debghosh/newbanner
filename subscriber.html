@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriber Experience - Baltimore Banner AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #457b9d;
+            --green: #2a9d8f;
+            --red: #e63946;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--green), #38ef7d);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #1d3557;
+            transform: scale(1.02);
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .article-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .article-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag.green { background: var(--green); }
+        .tag.red { background: var(--red); }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), #1d3557);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .feature-box i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .feature-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="cover_page.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Overview</a>
+
+    <div class="hero">
+        <i class="fas fa-user icon"></i>
+        <h1>Subscriber Experience</h1>
+        <p>Ultra-Personalized News: Your Own Baltimore Banner</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>6x Engagement | 28% Churn Reduction | $400K Annual Value</h3>
+            <p>Every subscriber gets a unique experience tailored to their interests</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-home"></i> Your Personalized Homepage</h3>
+            <p>Select a profile to see their custom Baltimore Banner experience:</p>
+            <select id="subscriber-profile">
+                <option value="">Choose subscriber...</option>
+                <option value="catonsville">Sarah - Catonsville Parent (Schools & Development)</option>
+                <option value="downtown">Michael - Downtown Professional (Business & Tech)</option>
+                <option value="sports">James - Sports Fan (Ravens & Orioles)</option>
+            </select>
+            <button class="btn" onclick="showPersonalizedHomepage()">Show My Homepage</button>
+            <div id="homepage-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-bell"></i> Smart Alerts</h3>
+            <p>AI learns what matters to you and sends timely notifications:</p>
+            <button class="btn" onclick="showSmartAlerts()">See My Alerts</button>
+            <div id="alerts-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-envelope"></i> Curated Newsletter</h3>
+            <p>Your personalized daily digest - no two subscribers get the same newsletter:</p>
+            <button class="btn" onclick="showNewsletter()">Generate My Newsletter</button>
+            <div id="newsletter-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-magic"></i> How Personalization Works</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <i class="fas fa-brain"></i>
+                    <h4>AI Learning</h4>
+                    <p>Analyzes reading patterns, time spent, and engagement</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Location-Based</h4>
+                    <p>Prioritizes news from your neighborhood and interests</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-clock"></i>
+                    <h4>Timing Optimization</h4>
+                    <p>Delivers content when you're most likely to read</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Continuous Improvement</h4>
+                    <p>Gets smarter with every interaction</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPersonalizedHomepage() {
+            const profile = document.getElementById('subscriber-profile').value;
+            if (!profile) { alert('Please select a profile'); return; }
+
+            const output = document.getElementById('homepage-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI personalizing your homepage...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                const profiles = {
+                    catonsville: {
+                        name: 'Sarah - Catonsville Parent',
+                        stories: [
+                            { title: 'BREAKING: New STEM Program Coming to Catonsville High', rel: 98, cat: 'Education', reason: 'Your child attends this school' },
+                            { title: 'Controversial Development Near School Gets Approval', rel: 95, cat: 'Development', reason: 'Located in your neighborhood' },
+                            { title: 'Baltimore County School Boundary Changes Proposed', rel: 92, cat: 'Education', reason: 'May affect your district' },
+                            { title: 'Local PTA Raises $50K for New Playground Equipment', rel: 88, cat: 'Community', reason: 'Your school community' },
+                        ]
+                    },
+                    downtown: {
+                        name: 'Michael - Downtown Professional',
+                        stories: [
+                            { title: '500 New Tech Jobs Coming to Baltimore Innovation District', rel: 97, cat: 'Business', reason: 'Matches tech industry interest' },
+                            { title: 'Downtown Office Occupancy Reaches Post-Pandemic High', rel: 93, cat: 'Commercial', reason: 'You work downtown' },
+                            { title: 'Johns Hopkins Launches Major AI Research Center', rel: 90, cat: 'Technology', reason: 'Trending in tech community' },
+                            { title: 'New Coworking Space Opens in Harbor East', rel: 85, cat: 'Business', reason: 'Near your office' },
+                        ]
+                    },
+                    sports: {
+                        name: 'James - Sports Enthusiast',
+                        stories: [
+                            { title: 'Ravens Injury Report: Lamar Jackson Full Participant', rel: 99, cat: 'Ravens', reason: 'You read every Ravens article' },
+                            { title: 'Orioles Sign Top Prospect to Major League Contract', rel: 96, cat: 'Orioles', reason: 'Breaking Orioles news' },
+                            { title: 'Analysis: Ravens Defense vs Steelers Rushing Attack', rel: 94, cat: 'Analysis', reason: 'Deep analysis matches preferences' },
+                            { title: 'Camden Yards Announces New Fan Experience Features', rel: 90, cat: 'Orioles', reason: 'Stadium news you follow' },
+                        ]
+                    }
+                };
+
+                const data = profiles[profile];
+                let html = `<h4>${data.name}'s Personalized Homepage</h4>`;
+                data.stories.forEach(s => {
+                    html += `
+                        <div class="article-card">
+                            <h5>${s.title}</h5>
+                            <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">${s.cat} • ${s.reason}</p>
+                            <span class="tag green">${s.rel}% Relevant</span>
+                        </div>
+                    `;
+                });
+                html += '<div class="stat-box"><h4>6.2x</h4><p>More likely to read vs generic homepage</p></div>';
+                output.innerHTML = html;
+            }, 1500);
+        }
+
+        function showSmartAlerts() {
+            const output = document.getElementById('alerts-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading your personalized alerts...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>Your Smart Alerts (Last 24 Hours)</h4>
+                    <div class="article-card">
+                        <h5><i class="fas fa-bolt" style="color: #e63946;"></i> BREAKING: School Board Meeting Tonight</h5>
+                        <p style="color: #666; margin: 0.5rem 0;">Sent at 3:45 PM - 2 hours before meeting</p>
+                        <p>AI detected this matches your interest in education policy and your child's school district</p>
+                        <span class="tag red">High Priority</span>
+                    </div>
+                    <div class="article-card">
+                        <h5><i class="fas fa-info-circle" style="color: #457b9d;"></i> Traffic Alert: Your Commute Route</h5>
+                        <p style="color: #666; margin: 0.5rem 0;">Sent at 7:15 AM - Before your usual departure</p>
+                        <p>Accident on I-83 South. AI suggests alternate route via Charles Street</p>
+                        <span class="tag">Timely</span>
+                    </div>
+                    <div class="article-card">
+                        <h5><i class="fas fa-star" style="color: #2a9d8f;"></i> New Article: Ravens Playoff Scenarios</h5>
+                        <p style="color: #666; margin: 0.5rem 0;">Sent at 6:00 PM - Your preferred reading time</p>
+                        <p>In-depth analysis by your favorite sports writer</p>
+                        <span class="tag green">Personalized</span>
+                    </div>
+                    <div class="stat-box"><h4>73%</h4><p>Alert open rate vs 22% industry average</p></div>
+                `;
+            }, 1500);
+        }
+
+        function showNewsletter() {
+            const output = document.getElementById('newsletter-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI curating your personalized newsletter...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>Your Daily Baltimore Banner - Thursday, January 16, 2025</h4>
+                    <p style="color: #666; margin: 1rem 0;">Good morning! Here's what matters to you today:</p>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5 style="color: #e63946; margin-bottom: 1rem;">🔥 TOP STORY FOR YOU</h5>
+                        <h4 style="margin-bottom: 0.5rem;">School Funding Formula Changes Could Impact Catonsville</h4>
+                        <p style="color: #666;">State legislators propose new formula that could shift $2.3M to your district...</p>
+                        <a href="#" style="color: #457b9d; font-weight: 600;">Read full story →</a>
+                    </div>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5 style="color: #457b9d; margin-bottom: 1rem;">📰 YOUR MORNING BRIEFING</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 0.75rem 0;">• <strong>Education:</strong> New after-school programs announced for 12 county schools</li>
+                            <li style="margin: 0.75rem 0;">• <strong>Development:</strong> Zoning hearing scheduled for Edmondson Village project</li>
+                            <li style="margin: 0.75rem 0;">• <strong>Community:</strong> Catonsville Arts Festival planning committee seeks volunteers</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5 style="color: #2a9d8f; margin-bottom: 1rem;">💡 RECOMMENDED FOR YOU</h5>
+                        <p><strong>Deep Dive:</strong> How Baltimore County Schools Are Addressing Teacher Shortages</p>
+                        <p style="color: #666; font-size: 0.9rem;">15 min read • Based on your interest in education policy</p>
+                    </div>
+
+                    <div class="stat-box"><h4>4.2x</h4><p>Higher engagement than generic newsletters</p></div>
+                `;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
