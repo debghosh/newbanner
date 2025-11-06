@@ -3,160 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baltimore Banner AI Transformation</title>
+    <title>Baltimore Banner AI Transformation - Experience Demos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 2rem;
         }
 
         .container {
-            max-width: 1200px;
-            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
-        .hero {
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
-            color: white;
-            margin-bottom: 3rem;
         }
 
-        .hero h1 {
-            font-size: 3rem;
+        .header h1 {
+            font-size: 2.5rem;
+            color: #1a1a2e;
             margin-bottom: 1rem;
             font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            opacity: 0.95;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
         }
 
-        .personas-grid {
+        .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .persona-card {
             background: white;
             border-radius: 16px;
-            padding: 2.5rem;
-            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .persona-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
         .persona-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .persona-card .icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .persona-card.subscriber .icon { color: #457b9d; }
-        .persona-card.journalist .icon { color: #e63946; }
-        .persona-card.researcher .icon { color: #2a9d8f; }
-        .persona-card.editor .icon { color: #7209b7; }
-
-        .persona-card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.75rem;
-            color: #1a1a1a;
-        }
-
-        .persona-card p {
-            font-size: 1.1rem;
-            color: #666;
+        .card-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
-            line-height: 1.6;
+            text-align: center;
         }
 
-        .persona-card .impact {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .card-cta {
+            margin-top: 1.5rem;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 0.75rem 1rem;
             border-radius: 8px;
+            text-align: center;
             font-weight: 600;
             font-size: 0.95rem;
-            margin-top: 1rem;
         }
 
-        .cta {
+        .impact-banner {
             background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .impact-banner h2 {
+            font-size: 1.8rem;
             color: #667eea;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .impact-item {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-label {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .cards-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.25rem;
+            }
+
+            .persona-card {
+                padding: 1.5rem;
+            }
+
+            .card-icon {
+                font-size: 2.5rem;
+            }
+
+            .card-title {
+                font-size: 1.15rem;
+            }
+
+            .card-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1.2rem; }
-            .personas-grid { grid-template-columns: 1fr; }
+            body {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-icon {
+                font-size: 2.5rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Ensure cards stay in one row on larger screens */
+        @media (min-width: 1401px) {
+            .cards-container {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="hero">
-            <h1>🚀 Baltimore Banner AI Transformation</h1>
-            <p>Experience the Future of Local Journalism</p>
+        <div class="header">
+            <h1>🎯 Baltimore Banner AI Transformation</h1>
+            <p>Experience how AI transforms every aspect of our newsroom - from investigative reporting to subscriber engagement. Click any persona to explore their AI-powered experience.</p>
         </div>
 
-        <div class="personas-grid">
-            <a href="subscriber.html" class="persona-card subscriber">
-                <i class="fas fa-user icon"></i>
-                <h2>Subscriber</h2>
-                <p>Netflix-level personalization for every reader. Your own unique Baltimore Banner experience.</p>
-                <div class="impact">6x Engagement | 28% Churn Reduction</div>
-                <div class="cta">Explore Experience →</div>
+        <div class="cards-container">
+            <a href="subscriber.html" class="persona-card">
+                <div class="card-icon">👤</div>
+                <h3 class="card-title">Subscriber Experience</h3>
+                <p class="card-description">Personalized homepage, AI-curated newsletters, smart recommendations, and content tailored to your interests and location.</p>
+                <div class="card-cta">
+                    <i class="fas fa-arrow-right"></i> View Subscriber Homepage
+                </div>
             </a>
 
-            <a href="journalist.html" class="persona-card journalist">
-                <i class="fas fa-pen-fancy icon"></i>
-                <h2>Journalist</h2>
-                <p>AI-powered research, fact-checking, and writing assistance. Focus on storytelling, not busywork.</p>
-                <div class="impact">90% Research Time Saved | 3-4x More Stories</div>
-                <div class="cta">Explore Experience →</div>
+            <a href="journalist.html" class="persona-card">
+                <div class="card-icon">✍️</div>
+                <h3 class="card-title">Journalist Experience</h3>
+                <p class="card-description">AI writing assistant, story angle generator, research tools, and intelligent content creation support.</p>
+                <div class="card-cta">
+                    <i class="fas fa-arrow-right"></i> Explore Journalist Tools
+                </div>
             </a>
 
-            <a href="researcher.html" class="persona-card researcher">
-                <i class="fas fa-microscope icon"></i>
-                <h2>Research Assistant</h2>
-                <p>Process 2,500 documents in 45 minutes. Find patterns humans miss. Transform investigations.</p>
-                <div class="impact">41 Hours → 4 Hours | 100% Document Coverage</div>
-                <div class="cta">Explore Experience →</div>
+            <a href="researcher.html" class="persona-card">
+                <div class="card-icon">🔍</div>
+                <h3 class="card-title">Investigative Reporter</h3>
+                <p class="card-description">Document analysis, pattern recognition, multi-agent investigation system, and automated research capabilities.</p>
+                <div class="card-cta">
+                    <i class="fas fa-arrow-right"></i> See Investigation Tools
+                </div>
             </a>
 
-            <a href="editor.html" class="persona-card editor">
-                <i class="fas fa-chart-line icon"></i>
-                <h2>Editor</h2>
-                <p>Real-time analytics, workflow optimization, performance prediction. Lead with data, not guesswork.</p>
-                <div class="impact">40% Admin Time Saved | 3x Strategic Work</div>
-                <div class="cta">Explore Experience →</div>
+            <a href="editor.html" class="persona-card">
+                <div class="card-icon">📊</div>
+                <h3 class="card-title">Editor Experience</h3>
+                <p class="card-description">Real-time analytics, performance predictions, workflow optimization, and data-driven editorial decisions.</p>
+                <div class="card-cta">
+                    <i class="fas fa-arrow-right"></i> View Editor Dashboard
+                </div>
             </a>
+        </div>
+
+        <div class="impact-banner">
+            <h2>Transformative Impact Across The Organization</h2>
+            <div class="impact-grid">
+                <div class="impact-item">
+                    <div class="impact-number">90%</div>
+                    <div class="impact-label">Time Savings on Document Analysis</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">6x</div>
+                    <div class="impact-label">Increase in Subscriber Engagement</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">40%</div>
+                    <div class="impact-label">Reduction in Editorial Admin Time</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">3-4x</div>
+                    <div class="impact-label">More Investigations Per Reporter</div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
