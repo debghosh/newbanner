@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partnership & Collaboration AI - Baltimore Banner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #2a9d8f;
+            --green: #38ef7d;
+            --purple: #7209b7;
+            --orange: #f77f00;
+            --blue: #457b9d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #1d7a6d;
+            transform: scale(1.02);
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .collab-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .collab-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .collab-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag.green { background: var(--green); }
+        .tag.purple { background: var(--purple); }
+        .tag.orange { background: var(--orange); }
+        .tag.blue { background: var(--blue); }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-grid .stat-box {
+            margin: 0;
+        }
+
+        .partner-logo {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Cover page</a>
+
+    <div class="hero">
+        <i class="fas fa-handshake icon"></i>
+        <h1>Partnership & Collaboration AI</h1>
+        <p>Scale Through Newsroom Networks & Shared AI Infrastructure</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>4-5x Audience Reach | $200K+ Cost Savings | 100+ Partner Stories/Year</h3>
+            <p>Amplify impact through AI-powered collaboration with national newsrooms</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-search"></i> ProPublica Collaboration Engine</h3>
+            <p style="color: #666; margin-bottom: 1rem;">AI analyzes ProPublica's national investigations and identifies local angles for Baltimore:</p>
+            <button class="btn" onclick="showProPublica()">View Collaboration Opportunities</button>
+            <div id="propublica-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-broadcast-tower"></i> NPR Content Integration</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Automatically transform NPR audio stories into local written content with Baltimore context:</p>
+            <button class="btn" onclick="showNPR()">View NPR Integration Dashboard</button>
+            <div id="npr-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-network-wired"></i> Multi-Newsroom Coordination</h3>
+            <p style="color: #666; margin-bottom: 1rem;">AI coordinates simultaneous publication with partner newsrooms for maximum impact:</p>
+            <button class="btn" onclick="showNetwork()">View Coordination Dashboard</button>
+            <div id="network-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function showProPublica() {
+            const output = document.getElementById('propublica-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing ProPublica investigations for local angles...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🔍 ProPublica Collaboration Opportunities</h4>
+
+                    <div class="partner-logo">🤝 ProPublica Partner</div>
+
+                    <div class="collab-card">
+                        <h5>🚨 HIGH-PRIORITY: Nursing Home Investigation</h5>
+                        <p><strong>ProPublica Story:</strong> "Neglect and Profit: How Private Equity Is Ruining Nursing Homes"<br>
+                        <strong>Published:</strong> 3 days ago<br>
+                        <strong>National Scope:</strong> Analysis of 2,000+ nursing homes across 40 states</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>AI-Identified Baltimore Angle:</strong></p>
+                        <p style="color: #666;">• 12 Baltimore-area nursing homes included in ProPublica dataset<br>
+                        • 3 facilities have changed ownership to private equity in last 18 months<br>
+                        • State inspection records show 47% increase in violations at PE-owned facilities<br>
+                        • 234 families in Baltimore area potentially affected</p>
+
+                        <p style="margin-top: 1rem;"><strong>Recommended Local Story:</strong> "Baltimore's Nursing Homes: Private Equity's Growing Footprint and Rising Safety Concerns"</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Resources from ProPublica:</strong><br>
+                        • Access to full national dataset (Baltimore subset ready)<br>
+                        • Methodology documentation for local analysis<br>
+                        • Expert sources willing to comment on local findings<br>
+                        • Graphics templates adaptable for Baltimore data</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Estimated Work:</strong> 20 hours reporting (vs 200+ hours if done from scratch)<br>
+                        <strong>Subscriber Value:</strong> High - affects 10K+ Baltimore families with elderly relatives<br>
+                        <strong>Timeline:</strong> Can publish within 2 weeks</p>
+
+                        <span class="tag green">Partnership Ready</span>
+                        <span class="tag purple">High Impact</span>
+                    </div>
+
+                    <div class="collab-card">
+                        <h5>📊 OPPORTUNITY: Education Funding Gaps</h5>
+                        <p><strong>ProPublica Story:</strong> "Miseducation: How America's School Funding System Fails Students"<br>
+                        <strong>Published:</strong> 2 weeks ago</p>
+
+                        <p style="margin-top: 1rem;"><strong>AI-Identified Connection:</strong><br>
+                        • Baltimore school funding patterns match national inequity trends<br>
+                        • ProPublica's analysis tool can be applied to Baltimore County data<br>
+                        • Timing perfect: Baltimore schools facing $120M budget gap (ongoing Banner story)</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Collaboration Approach:</strong> Create "local companion piece" using ProPublica methodology + our ongoing coverage</p>
+
+                        <span class="tag blue">Follow-Up Story</span>
+                    </div>
+
+                    <div class="collab-card">
+                        <h5>💡 REPUB OPPORTUNITY: Police Accountability</h5>
+                        <p><strong>ProPublica Story:</strong> "When Police Lie: The Officers Who Keep Their Jobs"<br>
+                        <strong>Published:</strong> 6 months ago<br>
+                        <strong>Performance:</strong> Top 10 most-read ProPublica stories of 2024</p>
+
+                        <p style="margin-top: 1rem;"><strong>AI Suggestion:</strong> Republish with local editor's note + sidebar<br>
+                        • Add Baltimore-specific context (consent decree, recent reforms)<br>
+                        • Include update on local policy changes since publication<br>
+                        • Link to Banner's ongoing police accountability coverage<br>
+                        <strong>Effort:</strong> 2 hours to adapt<br>
+                        <strong>Reach:</strong> Proven high-engagement topic for Baltimore audience</p>
+
+                        <span class="tag orange">Quick Win</span>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>47</h4>
+                            <p>ProPublica stories localized (YTD)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>$184K</h4>
+                            <p>Cost savings vs original reporting</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>4.3x</h4>
+                            <p>Audience multiplier</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #e7f3ff; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <h5 style="color: #0066cc; margin-bottom: 0.75rem;">📈 Partnership Impact</h5>
+                        <p style="color: #666; margin: 0;">
+                        <strong>How it works:</strong><br>
+                        1. AI monitors ProPublica's publication calendar<br>
+                        2. Automatically analyzes stories for Baltimore relevance<br>
+                        3. Cross-references with local data sources<br>
+                        4. Identifies resources available from ProPublica<br>
+                        5. Estimates work required and potential impact<br>
+                        6. Flags opportunities for editors
+                        </p>
+                    </div>
+                `;
+            }, 2500);
+        }
+
+        function showNPR() {
+            const output = document.getElementById('npr-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Processing NPR audio content...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📻 NPR Content Integration Dashboard</h4>
+
+                    <div class="partner-logo">🎙️ NPR Member Station</div>
+
+                    <div class="collab-card">
+                        <h5>🎧 AUTO-PROCESSED: Morning Edition Economic Segment</h5>
+                        <p><strong>Original NPR Story:</strong> "Small Businesses Struggle With New Supply Chain Challenges"<br>
+                        <strong>Aired:</strong> This morning, 7:42 AM<br>
+                        <strong>Format:</strong> 4:23 audio segment<br>
+                        <strong>Reporter:</strong> National economics correspondent</p>
+
+                        <p style="margin-top: 1rem;"><strong>AI-Generated Local Adaptation:</strong></p>
+                        
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                            <p style="margin: 0;"><strong>Suggested Headline:</strong> "Baltimore Small Businesses Face Same Supply Chain Pressures Hitting National Economy"</p>
+                            
+                            <p style="margin-top: 1rem; color: #666;"><strong>Lead paragraph (AI-generated):</strong><br>
+                            <em>Small businesses across Baltimore are grappling with the same supply chain disruptions that have created headaches for companies nationwide, according to a new NPR analysis. Local restaurant owners, retailers, and manufacturers told The Baltimore Banner that these challenges are particularly acute in the city, where...</em></p>
+                        </div>
+
+                        <p style="margin-top: 1rem;"><strong>AI Added Local Context:</strong><br>
+                        • Baltimore Port statistics and their relevance<br>
+                        • Quotes from 3 Baltimore small business owners (from past Banner coverage)<br>
+                        • Connection to Mayor Scott's small business initiatives<br>
+                        • Link to Chamber of Commerce survey on local business conditions</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Status:</strong> Draft ready for editor review (requires 15 min light editing)<br>
+                        <strong>Audio Embed:</strong> NPR player embedded with attribution<br>
+                        <strong>SEO:</strong> Optimized for "Baltimore small business" + "supply chain"</p>
+
+                        <span class="tag green">Ready to Publish</span>
+                    </div>
+
+                    <div class="collab-card">
+                        <h5>📝 WEEKLY ROUNDUP: This Week in Washington</h5>
+                        <p><strong>NPR Source:</strong> Politics Podcast + Morning Edition segments<br>
+                        <strong>Topic:</strong> Congressional budget negotiations</p>
+
+                        <p style="margin-top: 1rem;"><strong>AI-Generated Local Story:</strong> "What Washington's Budget Fight Means for Baltimore"</p>
+
+                        <p style="color: #666; margin-top: 0.5rem;"><strong>Auto-Generated Sections:</strong><br>
+                        • Federal transit funding → Impact on Baltimore Metro<br>
+                        • Housing assistance programs → Local rental assistance implications<br>
+                        • EPA regulations → Chesapeake Bay cleanup funding<br>
+                        • Education funding → Title I schools in Baltimore</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Local Expert Quotes Added:</strong> 3 quotes from Maryland congressional delegation (from past Banner coverage)<br>
+                        <strong>Work Required:</strong> 30 minutes to add reporter analysis and update with latest developments</p>
+
+                        <span class="tag blue">Weekly Feature</span>
+                    </div>
+
+                    <div class="collab-card">
+                        <h5>🎵 ARTS & CULTURE INTEGRATION</h5>
+                        <p><strong>NPR Story:</strong> All Things Considered segment on jazz revival<br>
+                        <strong>AI Transformation:</strong> Created local angle on Baltimore jazz scene</p>
+
+                        <p style="margin-top: 1rem;"><strong>Added Value:</strong><br>
+                        • Connected to Baltimore Jazz Festival (upcoming events calendar)<br>
+                        • Referenced Baltimore jazz history and venues<br>
+                        • Quoted local musicians (from Banner archives)<br>
+                        • Created sidebar: "Where to Hear Jazz in Baltimore This Month"</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Result:</strong> National story + local service journalism = 2.3x engagement vs standard repub</p>
+
+                        <span class="tag purple">High Engagement</span>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>12-15</h4>
+                            <p>NPR stories adapted/week</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>3.2x</h4>
+                            <p>Audience vs standalone NPR repub</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>$67K</h4>
+                            <p>Annual cost savings</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fff3cd; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <h5 style="color: #856404; margin-bottom: 0.75rem;">⚡ How NPR Integration Works</h5>
+                        <p style="color: #666; margin: 0;">
+                        <strong>Automated Process:</strong><br>
+                        1. AI monitors NPR's audio feed in real-time<br>
+                        2. Transcribes relevant segments using speech-to-text<br>
+                        3. Identifies topics with Baltimore relevance<br>
+                        4. Cross-references with Banner archive for local context<br>
+                        5. Generates draft with embedded audio + local adaptation<br>
+                        6. Flags for editor review (15-30 min to polish)<br>
+                        7. Publishes with proper NPR attribution
+                        </p>
+                    </div>
+                `;
+            }, 2300);
+        }
+
+        function showNetwork() {
+            const output = document.getElementById('network-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading network coordination dashboard...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🌐 Multi-Newsroom Network Dashboard</h4>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <div class="partner-logo">Baltimore Banner</div>
+                        <div class="partner-logo">ProPublica</div>
+                        <div class="partner-logo">NPR</div>
+                        <div class="partner-logo">Maryland Matters</div>
+                        <div class="partner-logo">Washington Post</div>
+                    </div>
+
+                    <div class="collab-card" style="border-left-color: var(--green);">
+                        <h5>🚀 ACTIVE COORDINATION: Housing Affordability Series</h5>
+                        <p><strong>Partnership:</strong> Baltimore Banner + Washington Post + Maryland Matters<br>
+                        <strong>Launch Date:</strong> Monday, January 20, 2025 at 6:00 AM (coordinated)<br>
+                        <strong>Status:</strong> <span style="color: var(--green); font-weight: 600;">On Track</span></p>
+
+                        <p style="margin-top: 1rem;"><strong>Story Distribution:</strong></p>
+                        <p style="color: #666;">
+                        • <strong>Washington Post:</strong> Regional overview + Prince George's County focus<br>
+                        • <strong>Baltimore Banner:</strong> Baltimore City deep-dive + data visualization<br>
+                        • <strong>Maryland Matters:</strong> Annapolis policy angle + legislative proposals<br>
+                        • <strong>Shared Resources:</strong> Regional housing database, expert sources, methodology
+                        </p>
+
+                        <p style="margin-top: 1rem;"><strong>AI Coordination Tasks:</strong><br>
+                        ✅ Aligned publication times across all partners<br>
+                        ✅ De-duplicated sources (no overlapping interviews)<br>
+                        ✅ Coordinated social media campaign<br>
+                        ✅ Created cross-promotion language for each outlet<br>
+                        ✅ Scheduled joint press conference with housing advocates<br>
+                        ⏳ Final fact-check alignment (in progress)</p>
+
+                        <p style="margin-top: 1rem;"><strong>Expected Impact:</strong><br>
+                        • Combined reach: 2.8M readers (vs 600K if Banner published alone)<br>
+                        • Policy influence: Greater impact on Maryland General Assembly<br>
+                        • Resource efficiency: $140K saved vs three separate investigations</p>
+
+                        <span class="tag green">Launch Ready</span>
+                        <span class="tag purple">High Impact</span>
+                    </div>
+
+                    <div class="collab-card">
+                        <h5>📋 UPCOMING: Environmental Justice Investigation</h5>
+                        <p><strong>Partners:</strong> Baltimore Banner + ProPublica + 4 regional outlets<br>
+                        <strong>Timeline:</strong> Publication in 6 weeks<br>
+                        <strong>Topic:</strong> Air quality disparities in low-income communities</p>
+
+                        <p style="margin-top: 1rem;"><strong>Division of Labor (AI-Coordinated):</strong><br>
+                        • ProPublica: National dataset analysis, methodology<br>
+                        • Baltimore Banner: Deep dive on Baltimore neighborhoods<br>
+                        • Regional partners: Parallel local investigations<br>
+                        • Shared: Expert interviews, graphics, data tools</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>AI Coordination Tools:</strong><br>
+                        • Shared document repository (2,400 documents)<br>
+                        • Cross-referenced source list (no interview duplication)<br>
+                        • Unified fact-checking database<br>
+                        • Coordinated embargo management<br>
+                        • Joint pitch to funders (Pulitzer Center)</p>
+
+                        <span class="tag blue">In Progress</span>
+                    </div>
+
+                    <div class="collab-card">
+                        <h5>💼 RESOURCE SHARING: Investigative Document Analysis</h5>
+                        <p><strong>Shared Infrastructure:</strong> AI document analysis platform<br>
+                        <strong>Cost:</strong> $85K/year split across 8 newsrooms = $10,625/each<br>
+                        <strong>Baltimore's Individual Cost:</strong> Would be $85K if purchased alone</p>
+
+                        <p style="margin-top: 1rem;"><strong>Recent Shared Investigation:</strong><br>
+                        Government contracts database (2.3M documents)<br>
+                        • ProPublica processed federalcontracts<br>
+                        • Banner extracted Baltimore-specific findings<br>
+                        • Maryland Matters identified state-level patterns<br>
+                        • All partners saved 200+ hours of individual analysis</p>
+
+                        <span class="tag green">Cost Savings</span>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>23</h4>
+                            <p>Collaborative stories (YTD)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>11.2M</h4>
+                            <p>Combined audience reach</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>$312K</h4>
+                            <p>Cost savings through sharing</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>3</h4>
+                            <p>National awards submitted</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #d4edda; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <h5 style="color: #155724; margin-bottom: 0.75rem;">🏆 Success Story: Police Reform Series</h5>
+                        <p style="color: #155724; margin: 0;">
+                        <strong>Partnership:</strong> Banner + ProPublica + 6 regional outlets<br>
+                        <strong>Result:</strong> Published simultaneously in 7 cities<br>
+                        <strong>Impact:</strong> Prompted DOJ review, cited by 4 state legislatures<br>
+                        <strong>Recognition:</strong> Finalist for Pulitzer Prize<br>
+                        <strong>Cost per outlet:</strong> $28K (vs $200K+ if done independently)<br>
+                        <strong>Audience:</strong> 8.4M readers across all markets
+                        </p>
+                    </div>
+                `;
+            }, 2100);
+        }
+    </script>
+</body>
+</html>

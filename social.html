@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Manager AI - Baltimore Banner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #1DA1F2;
+            --green: #2a9d8f;
+            --purple: #7209b7;
+            --orange: #f77f00;
+            --red: #e63946;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--accent), #0d8bd9);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #0d8bd9;
+            transform: scale(1.02);
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .social-post {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .social-post:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .social-post .platform {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .social-post .platform.twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .social-post .platform.facebook {
+            background: #1877F2;
+            color: white;
+        }
+
+        .social-post .platform.linkedin {
+            background: #0A66C2;
+            color: white;
+        }
+
+        .social-post .post-content {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .social-post .post-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag.green { background: var(--green); }
+        .tag.orange { background: var(--orange); }
+        .tag.red { background: var(--red); }
+        .tag.purple { background: var(--purple); }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), #0d8bd9);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-grid .stat-box {
+            margin: 0;
+        }
+
+        .alert-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--red);
+            transition: all 0.3s ease;
+        }
+
+        .alert-card h5 {
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Cover page</a>
+
+    <div class="hero">
+        <i class="fas fa-share-alt icon"></i>
+        <h1>Social Media Manager AI</h1>
+        <p>Automated Community Engagement & Real-Time Crisis Management</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>60% Traffic Increase | 1,500+ New Subscribers/Year | 80% Time Saved | 24/7 Monitoring</h3>
+            <p>AI-powered social media automation and intelligent community management</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-robot"></i> Auto-Post Generation</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Select an article and AI instantly creates optimized posts for all platforms:</p>
+            <select id="article-select">
+                <option value="">Choose an article...</option>
+                <option value="school-funding">Baltimore Schools Face $120M Budget Gap</option>
+                <option value="ravens-playoffs">Ravens Playoff Predictions: Expert Analysis</option>
+                <option value="harbor-development">Inner Harbor Redevelopment Plans Revealed</option>
+            </select>
+            <button class="btn" onclick="generatePosts()">Generate Social Posts</button>
+            <div id="posts-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-exclamation-triangle"></i> Crisis Detection & Response</h3>
+            <p style="color: #666; margin-bottom: 1rem;">AI monitors sentiment and detects potential issues in real-time:</p>
+            <button class="btn" onclick="showCrisisMonitor()">View Crisis Monitor</button>
+            <div id="crisis-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-comments"></i> Intelligent Comment Moderation</h3>
+            <p style="color: #666; margin-bottom: 1rem;">AI automatically filters toxic content while surfacing valuable community feedback:</p>
+            <button class="btn" onclick="showModeration()">View Moderation Queue</button>
+            <div id="moderation-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function generatePosts() {
+            const article = document.getElementById('article-select').value;
+            if (!article) {
+                alert('Please select an article');
+                return;
+            }
+
+            const output = document.getElementById('posts-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI generating optimized posts for all platforms...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                let postsHTML = '<h4>📱 Auto-Generated Social Posts</h4>';
+                
+                if (article === 'school-funding') {
+                    postsHTML += `
+                        <div class="social-post">
+                            <div class="platform twitter"><i class="fab fa-twitter"></i> Twitter/X</div>
+                            <div class="post-content">
+                                🚨 BREAKING: Baltimore schools face $120M budget shortfall. What does this mean for your neighborhood schools? Our investigation reveals which programs and staff positions are at risk. 📊👇
+                            </div>
+                            <div class="post-meta">
+                                <strong>Character count:</strong> 247/280<br>
+                                <strong>Hashtags:</strong> #Baltimore #Education #BaltimoreCitySchools<br>
+                                <strong>Best time to post:</strong> 7:15 AM (commute time)<br>
+                                <strong>Expected engagement:</strong> 340 retweets, 1,200 likes<br>
+                                <strong>Thread suggestion:</strong> Add 3-tweet thread with key findings
+                            </div>
+                            <span class="tag green">Optimized</span>
+                        </div>
+
+                        <div class="social-post">
+                            <div class="platform facebook"><i class="fab fa-facebook"></i> Facebook</div>
+                            <div class="post-content">
+                                Baltimore City Schools are facing a $120 million budget gap that could significantly impact students across all districts. 📚
+                                
+                                Our investigation found:
+                                • 200+ teaching positions at risk
+                                • After-school programs may be cut
+                                • Some schools could see larger class sizes
+                                
+                                Parents and educators are already mobilizing to fight the cuts. Here's what you need to know about how this affects YOUR neighborhood schools and what you can do.
+                                
+                                👉 Read the full investigation
+                            </div>
+                            <div class="post-meta">
+                                <strong>Format:</strong> Text + thumbnail image<br>
+                                <strong>Best time to post:</strong> 12:30 PM (lunch hour)<br>
+                                <strong>Expected engagement:</strong> 890 reactions, 240 shares, 180 comments<br>
+                                <strong>CTA:</strong> "Tag a Baltimore parent who needs to see this"
+                            </div>
+                            <span class="tag green">Optimized</span>
+                        </div>
+
+                        <div class="social-post">
+                            <div class="platform linkedin"><i class="fab fa-linkedin"></i> LinkedIn</div>
+                            <div class="post-content">
+                                Baltimore City Public Schools faces a critical $120M budget shortfall with far-reaching implications for education equity and workforce development in our region.
+                                
+                                Our investigative team spent 6 months analyzing budget documents, interviewing administrators, and speaking with families across all districts.
+                                
+                                Key findings:
+                                • Gap represents 8% of operating budget
+                                • Title I schools disproportionately affected
+                                • STEM and CTE programs particularly vulnerable
+                                
+                                This isn't just an education issue—it's an economic development issue. Today's school cuts shape tomorrow's workforce.
+                                
+                                What role can the business community play in addressing this crisis? Read our deep-dive analysis.
+                            </div>
+                            <div class="post-meta">
+                                <strong>Tone:</strong> Professional, solutions-focused<br>
+                                <strong>Best time to post:</strong> 8:00 AM (business hours)<br>
+                                <strong>Expected engagement:</strong> 560 reactions, 89 shares<br>
+                                <strong>Target audience:</strong> Baltimore business leaders, education professionals
+                            </div>
+                            <span class="tag green">Optimized</span>
+                        </div>
+
+                        <div class="stat-box">
+                            <h4>30 seconds</h4>
+                            <p>vs 20+ minutes to manually craft platform-optimized posts</p>
+                        </div>
+
+                        <div style="background: #e7f3ff; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="color: #0066cc; margin: 0;"><strong>💡 AI Recommendations:</strong></p>
+                            <p style="color: #666; margin-top: 0.5rem; margin-bottom: 0;">
+                            • Schedule Twitter post for 7:15 AM tomorrow (Thu commute)<br>
+                            • Facebook post at 12:30 PM (highest engagement window)<br>
+                            • LinkedIn post at 8:00 AM (business audience active)<br>
+                            • Create Instagram carousel with infographic (visual platform needs visual content)<br>
+                            • Consider paid boost on Facebook ($50 budget, target Baltimore parents 25-45)
+                            </p>
+                        </div>
+                    `;
+                }
+
+                output.innerHTML = postsHTML;
+            }, 2000);
+        }
+
+        function showCrisisMonitor() {
+            const output = document.getElementById('crisis-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Analyzing real-time social sentiment...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🚨 Crisis Detection Dashboard</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box" style="background: linear-gradient(135deg, var(--green), #38ef7d);">
+                            <h4>Normal</h4>
+                            <p>Overall Status</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>2,847</h4>
+                            <p>Mentions (24h)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>78%</h4>
+                            <p>Positive Sentiment</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>1</h4>
+                            <p>Alert (Medium)</p>
+                        </div>
+                    </div>
+
+                    <div class="alert-card">
+                        <h5>⚠️ MEDIUM-PRIORITY ALERT DETECTED</h5>
+                        <p><strong>Issue:</strong> Rising negative sentiment around police coverage article<br>
+                        <strong>Detected:</strong> 23 minutes ago<br>
+                        <strong>Volume:</strong> 47 negative mentions in last hour (300% increase)<br>
+                        <strong>Sentiment Score:</strong> -0.62 (threshold: -0.5)</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Key Complaints:</strong><br>
+                        • "Article omits officer's side of story" (12 mentions)<br>
+                        • "Biased reporting" (8 mentions)<br>
+                        • "Context missing about prior incidents" (6 mentions)</p>
+
+                        <p style="margin-top: 1rem;"><strong>AI-Recommended Response:</strong></p>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <p style="margin: 0;">"We appreciate this feedback. Our reporter spoke with the police department, which declined to provide comment at this time. We've added an update noting we remain open to including their perspective and have reached out again. Context about prior incidents is included in paragraph 6. We're committed to fair, comprehensive coverage."</p>
+                        </div>
+
+                        <p style="margin-top: 1rem;"><strong>Suggested Actions:</strong><br>
+                        1. Post AI-drafted response (above)<br>
+                        2. Update article with clarification note<br>
+                        3. Reach out to police PIO again (phone + email)<br>
+                        4. Monitor for next 2 hours for escalation</p>
+
+                        <span class="tag orange">Requires Approval</span>
+                    </div>
+
+                    <div class="social-post" style="border-left: 4px solid var(--green);">
+                        <h5 style="color: var(--green); margin-bottom: 0.5rem;">✅ AUTO-RESOLVED: Breaking News Factual Error</h5>
+                        <p><strong>Issue:</strong> 3 users pointed out incorrect game time in Ravens article<br>
+                        <strong>Action Taken:</strong> AI detected, verified error, alerted editor, correction published<br>
+                        <strong>Response Time:</strong> 4 minutes from first mention to correction<br>
+                        <strong>Impact:</strong> Prevented misinformation spread, maintained credibility</p>
+                        <span class="tag green">Auto-Handled</span>
+                    </div>
+
+                    <div class="social-post" style="border-left: 4px solid var(--green);">
+                        <h5 style="color: var(--green); margin-bottom: 0.5rem;">✅ POSITIVE TREND DETECTED</h5>
+                        <p><strong>Story:</strong> Education funding investigation<br>
+                        <strong>Engagement:</strong> 2.3x higher than average<br>
+                        <strong>Sentiment:</strong> 84% positive<br>
+                        <strong>Top Comments:</strong> "Finally some real journalism", "This is why I subscribe"<br>
+                        <strong>AI Recommendation:</strong> Pin to top of Twitter feed, boost on Facebook ($30 recommended)</p>
+                        <span class="tag green">Growth Opportunity</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>96%</h4>
+                        <p>Crisis prevention rate through early detection</p>
+                    </div>
+                `;
+            }, 1900);
+        }
+
+        function showModeration() {
+            const output = document.getElementById('moderation-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading moderation queue...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🛡️ AI Moderation Dashboard</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>847</h4>
+                            <p>Comments today</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>34</h4>
+                            <p>Auto-filtered</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>12</h4>
+                            <p>Needs review</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>99.2%</h4>
+                            <p>Accuracy rate</p>
+                        </div>
+                    </div>
+
+                    <div class="alert-card" style="border-left-color: var(--red);">
+                        <h5>🚫 AUTO-REMOVED: Hate Speech</h5>
+                        <p><strong>Comment:</strong> [Racial slur] + personal attack on reporter<br>
+                        <strong>Detected:</strong> 2 seconds after posting<br>
+                        <strong>Action:</strong> Removed, user warned<br>
+                        <strong>Confidence:</strong> 99.7%</p>
+                        <span class="tag red">Auto-Blocked</span>
+                    </div>
+
+                    <div class="alert-card" style="border-left-color: var(--orange);">
+                        <h5>⚠️ FLAGGED FOR REVIEW</h5>
+                        <p><strong>Comment:</strong> "This reporter clearly has an agenda. Check their past articles and you'll see a pattern of bias against police. They should be fired."<br>
+                        <strong>Issue:</strong> Personal attack on journalist, but borderline - doesn't violate clear policy<br>
+                        <strong>Confidence:</strong> 64% (below auto-action threshold)<br>
+                        <strong>Context:</strong> User has 4 previous approved comments, no history of violations</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>AI Recommendation:</strong> Allow with note. Comment is critical but doesn't cross into harassment. Suggests checking comment history rather than making claims.</p>
+                        
+                        <span class="tag orange">Human Decision Needed</span>
+                    </div>
+
+                    <div class="social-post" style="border-left: 4px solid var(--green);">
+                        <h5 style="color: var(--green); margin-bottom: 0.5rem;">💬 HIGHLIGHTED: Valuable Feedback</h5>
+                        <p><strong>Comment:</strong> "Great reporting, but you missed an important detail: the budget gap doesn't account for the $12M federal grant that was just approved. That should close about 10% of the shortfall. Might want to follow up on this."<br>
+                        <strong>Commenter:</strong> @BaltimoreBudgetWatcher (verified city finance analyst)<br>
+                        <strong>AI Analysis:</strong> Credible correction from subject matter expert<br>
+                        <strong>Action:</strong> Flagged for reporter review, potential story update</p>
+                        <span class="tag green">Story Tip</span>
+                    </div>
+
+                    <div class="social-post" style="border-left: 4px solid var(--purple);">
+                        <h5 style="color: var(--purple); margin-bottom: 0.5rem;">🌟 ENGAGEMENT OPPORTUNITY</h5>
+                        <p><strong>Comment:</strong> "I'm a teacher in the district and this budget cut is going to be devastating. I'd love to talk to a reporter about what this really means for classrooms."<br>
+                        <strong>Engagement:</strong> 23 likes, 4 replies in 10 minutes<br>
+                        <strong>AI Analysis:</strong> Potential source for follow-up story, high community interest<br>
+                        <strong>Recommendation:</strong> Forward to education reporter, reply acknowledging interest</p>
+                        <span class="tag purple">Follow-Up</span>
+                    </div>
+
+                    <div style="background: #e7f3ff; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <h5 style="color: #0066cc; margin-bottom: 0.75rem;">📊 Moderation Insights (Last 30 Days)</h5>
+                        <p style="color: #666; margin: 0;">
+                        <strong>Comments processed:</strong> 23,847<br>
+                        <strong>Toxic content blocked:</strong> 892 (3.7%)<br>
+                        <strong>False positives:</strong> 7 (0.03%)<br>
+                        <strong>Valuable tips surfaced:</strong> 34<br>
+                        <strong>Time saved:</strong> 18 hours/week<br>
+                        <strong>Community satisfaction:</strong> +47% (vs manual moderation)
+                        </p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>80%</h4>
+                        <p>Reduction in moderator workload with AI assistance</p>
+                    </div>
+                `;
+            }, 1700);
+        }
+    </script>
+</body>
+</html>

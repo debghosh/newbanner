@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal & Compliance AI - Baltimore Banner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #7209b7;
+            --green: #2a9d8f;
+            --red: #e63946;
+            --orange: #f77f00;
+            --yellow: #ffd60a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--accent), #9d4edd);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-top: 0.5rem;
+            min-height: 120px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #9d4edd;
+            transform: scale(1.02);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            margin-top: 0;
+            background: #6c757d;
+        }
+
+        .btn-group .btn:first-child {
+            background: var(--accent);
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .risk-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .risk-card.high { border-left-color: var(--red); }
+        .risk-card.medium { border-left-color: var(--orange); }
+        .risk-card.low { border-left-color: var(--yellow); }
+        .risk-card.clear { border-left-color: var(--green); }
+
+        .risk-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #dee2e6;
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tag.high { background: var(--red); color: white; }
+        .tag.medium { background: var(--orange); color: white; }
+        .tag.low { background: var(--yellow); color: #333; }
+        .tag.clear { background: var(--green); color: white; }
+        .tag.purple { background: var(--purple); color: white; }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), #9d4edd);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-grid .stat-box {
+            margin: 0;
+        }
+
+        .recommendation {
+            background: #e7f3ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 0.75rem;
+            border-left: 3px solid #0066cc;
+        }
+
+        .recommendation h6 {
+            color: #0066cc;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Cover page</a>
+
+    <div class="hero">
+        <i class="fas fa-balance-scale icon"></i>
+        <h1>Legal & Compliance AI</h1>
+        <p>60-Second Risk Assessment & Pre-Publication Legal Scanning</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>89% Faster Publication | $70K+ Legal Cost Savings | Zero Lawsuits Since Launch</h3>
+            <p>AI-powered legal risk detection and source protection</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-shield-alt"></i> 60-Second Legal Risk Scanner</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Paste article text and get instant legal risk assessment before publication:</p>
+            <textarea id="legal-text" placeholder="Paste article text here or click 'Load Demo Article' to see the scanner in action...
+
+Example: Baltimore police officer John Smith, badge #2847, has been accused of misconduct by three residents in the Eastwood neighborhood. Smith allegedly used excessive force during a traffic stop last week, witnesses claim. The officer could not be reached for comment."></textarea>
+            <div class="btn-group">
+                <button class="btn" onclick="scanLegal()">Scan for Legal Risks</button>
+                <button class="btn" onclick="loadDemoArticle()">Load Demo Article</button>
+            </div>
+            <div id="legal-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-user-secret"></i> Source Protection System</h3>
+            <p style="color: #666; margin-bottom: 1rem;">AI identifies information that could inadvertently reveal confidential sources:</p>
+            <button class="btn" onclick="showSourceProtection()">Run Source Protection Check</button>
+            <div id="source-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-file-contract"></i> Pre-Publication Checklist</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Automated verification that all legal requirements are met:</p>
+            <button class="btn" onclick="showChecklist()">View Publication Checklist</button>
+            <div id="checklist-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadDemoArticle() {
+            document.getElementById('legal-text').value = "Baltimore police officer John Smith, badge #2847, has been accused of misconduct by three residents in the Eastwood neighborhood. Smith allegedly used excessive force during a traffic stop last week, witnesses claim. The officer could not be reached for comment. Smith has a history of complaints, according to internal documents obtained by The Baltimore Banner, including two prior excessive force allegations that were dismissed by the department. One former colleague described him as 'trigger-happy and reckless.'";
+        }
+
+        function scanLegal() {
+            const text = document.getElementById('legal-text').value;
+            if (!text.trim()) {
+                alert('Please enter article text or click "Load Demo Article"');
+                return;
+            }
+
+            const output = document.getElementById('legal-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI scanning for defamation, privacy issues, and legal risks...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>⚖️ Legal Risk Assessment</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box" style="background: linear-gradient(135deg, var(--orange), #ff8c42);">
+                            <h4>MEDIUM</h4>
+                            <p>Overall Risk Level</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>3</h4>
+                            <p>Issues Detected</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>60 sec</h4>
+                            <p>Scan Duration</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>92%</h4>
+                            <p>Confidence</p>
+                        </div>
+                    </div>
+
+                    <div class="risk-card high">
+                        <h5>🚨 HIGH RISK: Potential Defamation</h5>
+                        <p><strong>Issue:</strong> Statement of fact without attribution or proof<br>
+                        <strong>Location:</strong> "One former colleague described him as 'trigger-happy and reckless.'"</p>
+                        
+                        <p style="margin-top: 0.75rem; color: #666;"><strong>Legal Concern:</strong> Anonymous source making serious character allegations. Could be construed as stating opinion as fact. Risk of defamation claim if source cannot be verified or if statement is false.</p>
+
+                        <div class="recommendation">
+                            <h6>💡 AI Recommendation:</h6>
+                            <p style="color: #666; margin: 0;">
+                            1. <strong>Option A (Safer):</strong> Remove this quote entirely unless source can be named or multiple sources confirm<br>
+                            2. <strong>Option B (Moderate Risk):</strong> Reframe as opinion: "One former colleague expressed concerns about his approach to policing, describing incidents where..."<br>
+                            3. <strong>Option C (Best Practice):</strong> Replace with documented facts: "Internal records show Smith received two written reprimands for..."
+                            </p>
+                        </div>
+
+                        <span class="tag high">Action Required</span>
+                    </div>
+
+                    <div class="risk-card medium">
+                        <h5>⚠️ MEDIUM RISK: Unverified Factual Claims</h5>
+                        <p><strong>Issue:</strong> Serious allegation without documented evidence<br>
+                        <strong>Location:</strong> "Smith allegedly used excessive force during a traffic stop last week"</p>
+
+                        <p style="margin-top: 0.75rem; color: #666;"><strong>Legal Concern:</strong> "Allegedly" provides some protection, but specific claim needs better sourcing. Was this reported to police? Filed as complaint? Documented witnesses?</p>
+
+                        <div class="recommendation">
+                            <h6>💡 AI Recommendation:</h6>
+                            <p style="color: #666; margin: 0;">
+                            Add supporting documentation:<br>
+                            • Reference official complaint number if filed<br>
+                            • Cite police report or incident documentation<br>
+                            • Name witnesses (if they consent) or specify "according to complaint filed with BPD on [date]"<br>
+                            • Include police response or statement
+                            </p>
+                        </div>
+
+                        <span class="tag medium">Strengthen Sourcing</span>
+                    </div>
+
+                    <div class="risk-card low">
+                        <h5>⚡ LOW RISK: Right-to-Reply Issue</h5>
+                        <p><strong>Issue:</strong> Subject's perspective not adequately represented<br>
+                        <strong>Location:</strong> "The officer could not be reached for comment."</p>
+
+                        <p style="margin-top: 0.75rem; color: #666;"><strong>Legal Concern:</strong> Minimal risk, but best practice requires more thorough attempt to reach subject when making serious allegations.</p>
+
+                        <div class="recommendation">
+                            <h6>💡 AI Recommendation:</h6>
+                            <p style="color: #666; margin: 0;">
+                            Strengthen right-to-reply evidence:<br>
+                            • Specify multiple contact attempts: "Smith did not respond to phone calls, texts, and email sent over three days"<br>
+                            • Document alternative paths: "A message left with the police union was not returned"<br>
+                            • Include timing: "We will update this story if Smith responds"
+                            </p>
+                        </div>
+
+                        <span class="tag low">Best Practice</span>
+                    </div>
+
+                    <div class="risk-card clear">
+                        <h5>✅ CLEAR: Factual Statements Properly Sourced</h5>
+                        <p><strong>Items:</strong><br>
+                        • Badge number (#2847) - verifiable fact<br>
+                        • Location (Eastwood neighborhood) - factual<br>
+                        • Timeframe (last week) - adequately vague to avoid specificity issues<br>
+                        • Attribution (witnesses claim) - proper sourcing language<br>
+                        • Document reference ("according to internal documents obtained by The Baltimore Banner") - strong attribution</p>
+
+                        <span class="tag clear">No Issues</span>
+                    </div>
+
+                    <div class="stat-box" style="background: linear-gradient(135deg, #6c757d, #495057);">
+                        <h4>Recommend: Editor + Legal Review</h4>
+                        <p>Medium risk issues require human review before publication</p>
+                    </div>
+
+                    <div style="background: #fff3cd; padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--orange); margin-top: 1rem;">
+                        <h5 style="color: #856404; margin-bottom: 0.75rem;">📋 Next Steps</h5>
+                        <p style="color: #856404; margin: 0;">
+                        1. <strong>Address HIGH risk item immediately</strong> - revise or remove problematic quote<br>
+                        2. <strong>Strengthen sourcing</strong> on medium risk items - add documentation<br>
+                        3. <strong>Enhance right-to-reply</strong> - document more thorough contact attempts<br>
+                        4. <strong>Send to editor</strong> for review of revisions<br>
+                        5. <strong>Optional:</strong> Consult legal counsel given medium-risk findings<br>
+                        <br>
+                        <strong>Estimated time to address issues:</strong> 30-45 minutes
+                        </p>
+                    </div>
+                `;
+            }, 2400);
+        }
+
+        function showSourceProtection() {
+            const output = document.getElementById('source-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Analyzing article for source identification risks...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🔒 Source Protection Analysis</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box" style="background: linear-gradient(135deg, var(--red), #d62828);">
+                            <h4>ALERT</h4>
+                            <p>Protection Status</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>2</h4>
+                            <p>Risks Identified</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>1</h4>
+                            <p>Critical Issue</p>
+                        </div>
+                    </div>
+
+                    <div class="risk-card high">
+                        <h5>🚨 CRITICAL: Source Could Be Identified</h5>
+                        <p><strong>Risk:</strong> Combination of details makes source identifiable<br>
+                        <strong>Issue in Article:</strong> "A senior administrator in the school district's budget office, who has worked there for 15 years and previously served in the county government, said..."</p>
+
+                        <p style="margin-top: 0.75rem; color: #666;"><strong>Why This Is Dangerous:</strong> Only 3 people in the budget office meet these criteria. Anyone with basic knowledge of the organization could identify the source. This violates your promise of confidentiality.</p>
+
+                        <div class="recommendation">
+                            <h6>💡 AI Recommendation - IMMEDIATE ACTION REQUIRED:</h6>
+                            <p style="color: #666; margin: 0;">
+                            <strong>Replace with:</strong> "A district administrator familiar with the budget process said..."<br>
+                            <br>
+                            <strong>Remove these identifying details:</strong><br>
+                            ❌ "senior" (narrows it down)<br>
+                            ❌ "budget office" (specific department)<br>
+                            ❌ "15 years" (very specific tenure)<br>
+                            ❌ "previously served in county government" (unique background)<br>
+                            <br>
+                            <strong>If these details are essential to credibility:</strong> You must get explicit permission from source to include them, with clear understanding of identification risk.
+                            </p>
+                        </div>
+
+                        <span class="tag high">Must Fix</span>
+                    </div>
+
+                    <div class="risk-card medium">
+                        <h5>⚠️ MEDIUM RISK: Metadata Could Reveal Source</h5>
+                        <p><strong>Issue:</strong> Document you received from confidential source<br>
+                        <strong>File:</strong> budget_memo_final.docx</p>
+
+                        <p style="margin-top: 0.75rem; color: #666;"><strong>Metadata Analysis Shows:</strong><br>
+                        • Author: "J. Martinez"<br>
+                        • Last Modified: January 12, 2025, 4:47 PM<br>
+                        • Organization: Baltimore City Public Schools<br>
+                        • Edit history: 7 revisions</p>
+
+                        <div class="recommendation">
+                            <h6>💡 AI Recommendation:</h6>
+                            <p style="color: #666; margin: 0;">
+                            <strong>Before publishing any documents:</strong><br>
+                            1. Strip all metadata using our secure document sanitizer<br>
+                            2. Convert to PDF or image to remove hidden data<br>
+                            3. Never upload original documents directly<br>
+                            4. Consider redacting additional details that could identify source<br>
+                            <br>
+                            <strong>Note:</strong> AI has detected this file has not yet been sanitized. <span style="color: var(--red); font-weight: 600;">DO NOT publish in current form.</span>
+                            </p>
+                        </div>
+
+                        <span class="tag medium">Action Needed</span>
+                    </div>
+
+                    <div class="risk-card clear">
+                        <h5>✅ PROTECTED: Anonymous Sources Properly Handled</h5>
+                        <p><strong>Good Examples in Your Article:</strong><br>
+                        • "Multiple teachers told The Banner..." (plural, no identifying details)<br>
+                        • "A parent who requested anonymity..." (clear explanation)<br>
+                        • "Documents obtained by The Banner show..." (no source attribution needed)</p>
+
+                        <span class="tag clear">Well Protected</span>
+                    </div>
+
+                    <div style="background: #f8d7da; padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--red); margin-top: 1rem;">
+                        <h5 style="color: #721c24; margin-bottom: 0.75rem;">⚠️ CRITICAL REMINDER</h5>
+                        <p style="color: #721c24; margin: 0;">
+                        <strong>Legal Obligation:</strong> When you promise confidentiality, you have both ethical and legal obligations to protect sources.<br>
+                        <br>
+                        <strong>Consequences of Source Exposure:</strong><br>
+                        • Source could face retaliation, job loss, or legal action<br>
+                        • Your credibility and that of The Baltimore Banner damaged<br>
+                        • Future sources will not trust you<br>
+                        • Potential legal liability<br>
+                        <br>
+                        <strong>Before publication:</strong> Have editor review all source protection concerns. When in doubt, remove identifying information.
+                        </p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>Zero</h4>
+                        <p>Confidential sources exposed since AI system launch</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function showChecklist() {
+            const output = document.getElementById('checklist-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Running pre-publication verification...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📋 Pre-Publication Legal Checklist</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box" style="background: linear-gradient(135deg, var(--green), #38ef7d);">
+                            <h4>READY</h4>
+                            <p>Publication Status</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>12/14</h4>
+                            <p>Checks Passed</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>2</h4>
+                            <p>Items Need Review</p>
+                        </div>
+                    </div>
+
+                    <div class="risk-card clear">
+                        <h5>✅ Defamation Protection</h5>
+                        <p>
+                        ✅ All serious allegations attributed to named sources or documents<br>
+                        ✅ Opinion clearly labeled as opinion<br>
+                        ✅ Facts distinguished from speculation<br>
+                        ✅ No unverified claims presented as fact<br>
+                        ✅ Subjects given adequate opportunity to respond
+                        </p>
+                        <span class="tag clear">Compliant</span>
+                    </div>
+
+                    <div class="risk-card clear">
+                        <h5>✅ Privacy & Confidentiality</h5>
+                        <p>
+                        ✅ Confidential sources adequately protected<br>
+                        ✅ No unnecessary disclosure of private information<br>
+                        ✅ Minors' identities protected where appropriate<br>
+                        ✅ Document metadata scrubbed<br>
+                        ✅ No revenge porn or non-consensual intimate images
+                        </p>
+                        <span class="tag clear">Compliant</span>
+                    </div>
+
+                    <div class="risk-card medium">
+                        <h5>⚠️ Right to Reply</h5>
+                        <p>
+                        ✅ Primary subjects contacted<br>
+                        ✅ Reasonable time given for response<br>
+                        ⚠️ <strong>Needs Review:</strong> Police union representative mentioned but not contacted. Consider reaching out or noting in article.
+                        </p>
+                        <span class="tag medium">Minor Issue</span>
+                    </div>
+
+                    <div class="risk-card clear">
+                        <h5>✅ Copyright & Fair Use</h5>
+                        <p>
+                        ✅ All images properly licensed or credited<br>
+                        ✅ Quotes fall within fair use limits<br>
+                        ✅ No substantial copying of copyrighted material<br>
+                        ✅ Proper attribution for all sources
+                        </p>
+                        <span class="tag clear">Compliant</span>
+                    </div>
+
+                    <div class="risk-card low">
+                        <h5>⚡ Factual Accuracy</h5>
+                        <p>
+                        ✅ Dates and times verified<br>
+                        ✅ Names and titles spell-checked against official sources<br>
+                        ✅ Statistics cross-referenced with original sources<br>
+                        ⚠️ <strong>Suggestion:</strong> Consider adding hyperlinks to government data sources for transparency
+                        </p>
+                        <span class="tag low">Best Practice</span>
+                    </div>
+
+                    <div class="risk-card clear">
+                        <h5>✅ Corrections Policy</h5>
+                        <p>
+                        ✅ Prior corrections on this topic reviewed<br>
+                        ✅ Update/correction process in place if needed<br>
+                        ✅ Contact information for corrections clearly visible
+                        </p>
+                        <span class="tag clear">Compliant</span>
+                    </div>
+
+                    <div style="background: #d4edda; padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--green); margin-top: 1rem;">
+                        <h5 style="color: #155724; margin-bottom: 0.75rem;">✅ RECOMMENDATION: Cleared for Publication</h5>
+                        <p style="color: #155724; margin: 0;">
+                        <strong>Overall Assessment:</strong> Article meets legal and ethical standards for publication.<br>
+                        <br>
+                        <strong>Minor items to address (optional):</strong><br>
+                        • Consider contacting police union rep<br>
+                        • Add hyperlinks to source data<br>
+                        <br>
+                        <strong>These can be addressed before or after publication and do not block publication.</strong><br>
+                        <br>
+                        <strong>Legal review time saved:</strong> 2-3 hours vs manual review<br>
+                        <strong>Publication delay prevented:</strong> Same-day publication possible
+                        </p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>89%</h4>
+                        <p>Faster publication time with AI legal review</p>
+                    </div>
+                `;
+            }, 1800);
+        }
+    </script>
+</body>
+</html>

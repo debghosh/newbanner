@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & Advertising AI - Baltimore Banner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #f77f00;
+            --green: #2a9d8f;
+            --purple: #7209b7;
+            --orange: #f77f00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, var(--accent), #ff8c42);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .impact-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-card h3 i {
+            color: var(--accent);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #ff8c42;
+            transform: scale(1.02);
+        }
+
+        .output {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .output.show { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .result-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag.green { background: var(--green); }
+        .tag.purple { background: var(--purple); }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent), #ff8c42);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .stat-box h4 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 1rem; opacity: 0.9; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-grid .stat-box {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Cover page</a>
+
+    <div class="hero">
+        <i class="fas fa-dollar-sign icon"></i>
+        <h1>Sales & Advertising AI</h1>
+        <p>Data-Driven Revenue Optimization & Intelligent Sales Automation</p>
+    </div>
+
+    <div class="container">
+        <div class="impact-banner">
+            <h3>+$2.8M Annual Revenue | 67% Win Rate | 3x Sales Efficiency | 24/7 Optimization</h3>
+            <p>AI-powered sales intelligence and programmatic advertising optimization</p>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-lightbulb"></i> AI Pitch Generator</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Select a prospect and AI instantly creates a customized, data-backed pitch:</p>
+            <select id="pitch-client">
+                <option value="">Select a prospect...</option>
+                <option value="johns-hopkins">Johns Hopkins University (Healthcare)</option>
+                <option value="under-armour">Under Armour (Retail/Sports)</option>
+                <option value="t-rowe-price">T. Rowe Price (Financial Services)</option>
+            </select>
+            <button class="btn" onclick="generatePitch()">Generate AI Pitch</button>
+            <div id="pitch-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-chart-line"></i> Programmatic Ad Optimization</h3>
+            <p style="color: #666; margin-bottom: 1rem;">AI continuously optimizes ad placements, pricing, and targeting in real-time:</p>
+            <button class="btn" onclick="showProgrammatic()">Run Optimization Analysis</button>
+            <div id="programmatic-output" class="output"></div>
+        </div>
+
+        <div class="demo-card">
+            <h3><i class="fas fa-bullseye"></i> Real-Time Attribution Tracking</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Track every touchpoint and prove ROI to advertisers with precision:</p>
+            <button class="btn" onclick="showAttribution()">View Attribution Dashboard</button>
+            <div id="attribution-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function generatePitch() {
+            const client = document.getElementById('pitch-client').value;
+            if (!client) {
+                alert('Please select a prospect');
+                return;
+            }
+
+            const output = document.getElementById('pitch-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>AI analyzing prospect data and generating customized pitch...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                let pitchContent = '';
+                
+                if (client === 'johns-hopkins') {
+                    pitchContent = `
+                        <h4>🎯 AI-Generated Pitch: Johns Hopkins University</h4>
+                        
+                        <div class="result-card">
+                            <h5>📊 Prospect Intelligence</h5>
+                            <p><strong>Company:</strong> Johns Hopkins University<br>
+                            <strong>Industry:</strong> Healthcare/Medical Research<br>
+                            <strong>Annual Marketing Budget:</strong> $8.5M (estimated)<br>
+                            <strong>Current Digital Spend:</strong> $2.1M/year<br>
+                            <strong>Decision Maker:</strong> Director of Marketing Communications<br>
+                            <strong>Pain Points:</strong> Reaching Baltimore healthcare professionals, physician recruitment, research visibility</p>
+                            <span class="tag green">High-Value Target</span>
+                        </div>
+
+                        <div class="result-card">
+                            <h5>💡 Recommended Pitch Angle</h5>
+                            <p><strong>Hook:</strong> "Reach 89% of Baltimore's healthcare professionals where they already get their news"</p>
+                            <p style="margin-top: 0.5rem; color: #666;"><strong>Key Stats to Lead With:</strong><br>
+                            • 47,000 monthly healthcare professional readers (verified)<br>
+                            • 23% of our audience works in healthcare (3.4x higher than regional average)<br>
+                            • Average reader HHI: $127K (perfect for physician recruitment)<br>
+                            • 89% engagement rate on healthcare/medical stories</p>
+                            <span class="tag purple">Evidence-Based</span>
+                        </div>
+
+                        <div class="result-card">
+                            <h5>📦 Recommended Package</h5>
+                            <p><strong>Custom Healthcare Leadership Package</strong><br>
+                            <strong>Components:</strong><br>
+                            • 6-month exclusive healthcare vertical sponsorship<br>
+                            • Sponsored content series (4 articles) on medical innovation<br>
+                            • Newsletter header placement (Healthcare & Policy digest)<br>
+                            • Display ads targeted to healthcare professionals<br>
+                            • Native content integration in daily briefing</p>
+                            <p style="margin-top: 0.5rem;"><strong>Investment:</strong> $185,000 (6 months)<br>
+                            <strong>Projected Reach:</strong> 1.2M impressions, 47K unique healthcare professionals<br>
+                            <strong>ROI:</strong> $23 per qualified physician reached (vs $67 industry avg)</p>
+                            <span class="tag green">67% Win Probability</span>
+                        </div>
+
+                        <div class="result-card">
+                            <h5>🎭 Objection Handling (AI-Predicted)</h5>
+                            <p><strong>Likely Objection #1:</strong> "We already advertise in Baltimore Business Journal"<br>
+                            <strong>Response:</strong> "BBJ reaches business leaders broadly, but only 8% are in healthcare. Our audience is 23% healthcare professionals - you're paying for 3x less waste and reaching decision-makers in your specific field."</p>
+                            <p style="margin-top: 0.5rem;"><strong>Likely Objection #2:</strong> "How do we know these are real healthcare professionals?"<br>
+                            <strong>Response:</strong> "Great question. We verify through: (1) email domains from medical institutions (2) professional credential verification (3) engagement patterns on clinical content. I can share our verification methodology and third-party audit results."</p>
+                            <span class="tag">Confidence: 89%</span>
+                        </div>
+
+                        <div class="result-card">
+                            <h5>📅 Recommended Next Steps</h5>
+                            <p>1. <strong>Email pitch deck</strong> (auto-generated, ready to send)<br>
+                            2. <strong>Schedule 20-min call</strong> - Best times: Tue/Thu 10-11am (based on past response patterns)<br>
+                            3. <strong>Offer pilot program</strong> - 1-month trial at $28K to prove concept<br>
+                            4. <strong>Bring case study</strong> - University of Maryland Medical System campaign (3.4x ROI)</p>
+                        </div>
+
+                        <div class="stat-box">
+                            <h4>45 seconds</h4>
+                            <p>vs 3+ hours of manual research and pitch creation</p>
+                        </div>
+                    `;
+                }
+
+                output.innerHTML = pitchContent;
+            }, 2200);
+        }
+
+        function showProgrammatic() {
+            const output = document.getElementById('programmatic-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Running real-time optimization analysis...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>🤖 Programmatic Optimization Dashboard</h4>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>$147K</h4>
+                            <p>Revenue this month</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>4.2x</h4>
+                            <p>Average ROAS</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>$2.18</h4>
+                            <p>Avg CPM (↓18% this week)</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>94%</h4>
+                            <p>Fill rate</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h5>🎯 AI Auto-Optimizations (Last 24 Hours)</h5>
+                        <p><strong>Action 1:</strong> Shifted 23% of inventory from low-performing breakfast hours (6-8am) to high-engagement evening slot (7-9pm)<br>
+                        <strong>Result:</strong> +$2,840 revenue, +1.3x CTR<br>
+                        <strong>Confidence:</strong> 96%</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Action 2:</strong> Detected financial services advertiser fatigue on desktop. Automatically reduced frequency cap and shifted 40% of impressions to mobile.<br>
+                        <strong>Result:</strong> Prevented -$1,200 in wasted spend, maintained engagement<br>
+                        <strong>Confidence:</strong> 91%</p>
+
+                        <p style="margin-top: 1rem;"><strong>Action 3:</strong> Identified Ravens playoff content surge. Dynamically increased CPM by 35% for sports-adjacent placements.<br>
+                        <strong>Result:</strong> +$4,100 revenue without losing fill rate<br>
+                        <strong>Confidence:</strong> 98%</p>
+                        <span class="tag green">All Auto-Applied</span>
+                    </div>
+
+                    <div class="result-card">
+                        <h5>⚠️ Revenue Opportunities Detected</h5>
+                        <p><strong>Opportunity 1:</strong> Education content performing 2.1x above baseline<br>
+                        <strong>Recommendation:</strong> Create "Education" premium ad category, price at +40%<br>
+                        <strong>Potential Impact:</strong> +$8,400/month</p>
+
+                        <p style="margin-top: 1rem;"><strong>Opportunity 2:</strong> Under-monetizing mobile (67% of traffic, only 52% of revenue)<br>
+                        <strong>Recommendation:</strong> Add mobile-optimized native ad units to article mid-points<br>
+                        <strong>Potential Impact:</strong> +$12,300/month</p>
+                        <span class="tag purple">Requires Approval</span>
+                    </div>
+
+                    <div class="result-card">
+                        <h5>📊 Performance vs Traditional Management</h5>
+                        <p><strong>Revenue:</strong> +37% vs manual optimization<br>
+                        <strong>Fill Rate:</strong> +12 percentage points<br>
+                        <strong>CPM:</strong> +28% average<br>
+                        <strong>Advertiser Retention:</strong> 89% (vs 71% industry avg)<br>
+                        <strong>Time Saved:</strong> 25 hours/week on manual adjustments</p>
+                        <span class="tag green">Proven ROI</span>
+                    </div>
+
+                    <div class="stat-box" style="background: linear-gradient(135deg, var(--green), #38ef7d);">
+                        <h4>+$1.2M</h4>
+                        <p>Projected annual revenue increase from AI optimization</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function showAttribution() {
+            const output = document.getElementById('attribution-output');
+            output.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading attribution data...</p></div>';
+            output.classList.add('show');
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4>📊 Attribution Dashboard - Active Campaign</h4>
+
+                    <div class="result-card">
+                        <h5>🎯 Campaign: T. Rowe Price Financial Planning Campaign</h5>
+                        <p><strong>Duration:</strong> 30 days (Jan 1-30, 2025)<br>
+                        <strong>Investment:</strong> $45,000<br>
+                        <strong>Objective:</strong> Drive financial planning consultations<br>
+                        <strong>Target:</strong> Baltimore professionals, HHI $100K+, age 35-55</p>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <h4>847K</h4>
+                            <p>Total impressions</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>2,340</h4>
+                            <p>Click-throughs</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>189</h4>
+                            <p>Form completions</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>34</h4>
+                            <p>Consultations booked</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h5>🔍 Multi-Touch Attribution Analysis</h5>
+                        <p><strong>Customer Journey Pattern (Most Common):</strong></p>
+                        <p style="margin-top: 0.5rem;">1. <strong>First Touch:</strong> Display ad on Baltimore business article (morning commute)<br>
+                        2. <strong>Second Touch:</strong> Sponsored content article read (lunch hour, mobile)<br>
+                        3. <strong>Third Touch:</strong> Newsletter click (evening, desktop)<br>
+                        4. <strong>Conversion:</strong> Direct visit to T. Rowe Price site, form completion (weekend)</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Time to Conversion:</strong> Average 11.3 days, 4.2 touchpoints<br>
+                        <strong>Most Valuable Touchpoint:</strong> Sponsored content (38% influence on conversion)<br>
+                        <strong>Assist Rate:</strong> Newsletter placement drives 2.7x higher conversion when combined with display</p>
+                        <span class="tag green">Full Funnel Tracked</span>
+                    </div>
+
+                    <div class="result-card">
+                        <h5>💰 ROI Calculation</h5>
+                        <p><strong>Investment:</strong> $45,000<br>
+                        <strong>Consultations Generated:</strong> 34<br>
+                        <strong>Cost Per Consultation:</strong> $1,323<br>
+                        <strong>Client Conversion Rate:</strong> 47% (T. Rowe Price avg)<br>
+                        <strong>Expected New Clients:</strong> 16<br>
+                        <strong>Avg Client Lifetime Value:</strong> $28,400 (T. Rowe Price data)<br>
+                        <strong>Total Expected Revenue:</strong> $454,400<br>
+                        <strong>ROI:</strong> <span style="font-size: 1.3rem; color: var(--green); font-weight: 700;">10.1x</span></p>
+                        <span class="tag green">Verified by Advertiser</span>
+                    </div>
+
+                    <div class="result-card">
+                        <h5>📈 Performance Insights for Renewal</h5>
+                        <p><strong>What Worked Best:</strong><br>
+                        • Articles about retirement planning (3.2x engagement)<br>
+                        • Weekend morning newsletter placement (highest CTR)<br>
+                        • Mobile native ads (2.1x conversion vs desktop display)</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Opportunities for Next Campaign:</strong><br>
+                        • Expand to education savings content (untapped audience)<br>
+                        • Add video pre-roll on financial news stories<br>
+                        • Test account-based targeting for high-net-worth zip codes</p>
+
+                        <p style="margin-top: 0.5rem;"><strong>Recommended Renewal:</strong> $65,000 for 6 weeks (projected 52 consultations)</p>
+                        <span class="tag purple">Ready to Present</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <h4>96%</h4>
+                        <p>Renewal rate for campaigns with attribution transparency</p>
+                    </div>
+                `;
+            }, 1800);
+        }
+    </script>
+</body>
+</html>
